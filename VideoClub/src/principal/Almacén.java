@@ -34,11 +34,8 @@ public class Almacén {
 	}
 	
 	public void Datos() throws IOException {
-		File file;
-		file = new File("D:\\Windows\\Escritorio\\学习资料\\Universidad\\Season_4\\Programación avanzada\\Project\\SIA\\Repository\\VideoClub\\src\\recursos\\infoPeliculas.csv");
-		
-		
-		try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+		File archivo = new File("src/recursos/infoPeliculas.csv");
+		try(BufferedReader reader = new BufferedReader(new FileReader(archivo))){
 			String linea = reader.readLine();
 			while((linea = reader.readLine()) != null) {
 				String[] datos = linea.split(",");
