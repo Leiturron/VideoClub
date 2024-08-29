@@ -46,6 +46,6 @@ public class Pelicula {
 			this.stock = stock;
 		}
 		public int getDecada(int año) {
-			return (año / 10) * 10;
+			return año - (año % 10);
 		}
 }
