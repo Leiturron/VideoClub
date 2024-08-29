@@ -2,14 +2,14 @@ package principal;
 
 public class Pelicula {
 	private String titulo;
-	private String directores;
+	private String director;
 	private String genero;
 	private int año;
 	private int stock;
 	
-	public Pelicula(String titulo, String directores, String genero, int año, int stock) {
+	public Pelicula(String titulo, String director, String genero, int año, int stock) {
 		this.titulo = titulo;
-		this.directores = directores;
+		this.director = director;
 		this.genero = genero;
 		this.año = año;
 		this.stock = stock;
@@ -21,11 +21,11 @@ public class Pelicula {
 		public void setNombre(String titulo) {
 			this.titulo = titulo;
 		}
-		public String getDirectores() {
-			return directores;
+		public String getDirector() {
+			return director;
 		}
-		public void setDirectores(String directores) {
-			this.directores = directores;
+		public void setDirector(String director) {
+			this.director = director;
 		}
 		public String getGenero() {
 			return genero;
@@ -44,5 +44,8 @@ public class Pelicula {
 		}
 		public void setStock(int stock ) {
 			this.stock = stock;
+		}
+		public int getDecada(int año) {
+			return (año / 10) * 10;
 		}
 }
