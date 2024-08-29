@@ -87,43 +87,16 @@ public class Almacén {
 		}
 	}
 	
-	public void buscarPorTitulo(String titulo) {
-		for(short i = 0; i < películas.size(); i++) {
-			if(i == películas.size() - 1 && !películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
-				System.out.println("Película no encontrada");
-				break;
-			}
-			else if(películas.get(i).getTitulo() == titulo) {
-				System.out.println("Película encontrada:");
-				System.out.println();
-				System.out.println("Título:" + películas.get(i).getTitulo());
-				System.out.println("Código:" + películas.get(i).getCodigo());
-				System.out.println("Género:" + películas.get(i).getGenero());
-				System.out.println("Año:" + películas.get(i).getAño());
-				System.out.println("Director:" + películas.get(i).getDirector());
-				break;
-			}
-		}
+	public Pelicula buscarPorCodigo(int codigo) {
+		for(short i = 0; i < películas.size(); i++)
+			if(películas.get(i).getCodigo() == codigo) return películas.get(i);
+		return null;
 	}
 	
-	public void buscarPorCodigo(int codigo) {
-		for(short i = 0; i < películas.size(); i++) {
-			if(i == películas.size() - 1 && películas.get(i).getCodigo() != codigo) {
-				System.out.println("Película no encontrada");
-				System.out.println();
-				break;
-			}
-			else if(películas.get(i).getCodigo() == codigo) {
-				System.out.println("Película encontrada:");
-				System.out.println();
-				System.out.println("Título: " + películas.get(i).getTitulo());
-				System.out.println("Género: " + películas.get(i).getGenero());
-				System.out.println("Año: " + películas.get(i).getAño());
-				System.out.println("Director: " + películas.get(i).getDirector());
-				System.out.println("Stock: " + películas.get(i).getStock());
-				break;
-			}
-		}
+	public Pelicula buscarPorTitulo(String titulo) {
+		for(short i = 0; i < películas.size(); i++) 
+			if(películas.get(i).getTitulo() == titulo) return películas.get(i);
+		return null;
 	}
 	
 	public void buscarPorDirector(String director) {
@@ -162,7 +135,7 @@ public class Almacén {
 		}
 	}
 	
-	public void buscarPorDécada(Integer década) {
+	public void buscarPorDécada(int década) {
 		if(mapaDécadas.get(década) == null) {
 			System.out.println("No existen películas en la década de " + década);
 			System.out.println();

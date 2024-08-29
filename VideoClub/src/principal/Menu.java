@@ -113,12 +113,10 @@ public class Menu {
 			if(opcion == 6) break;
 			switch(opcion) {
 				case 1:
-					System.out.print("Ingrese el código de la película a buscar: ");
-					int codigo = Integer.parseInt(lector.readLine());
-					almacen1.buscarPorCodigo(codigo);
+					searchCode();
 					break;
 				case 2:
-					
+					searchTitle();
 				case 3:
 				case 4:
 				case 5:
@@ -129,4 +127,31 @@ public class Menu {
 			lector.readLine();		
 			}
 	}
+	
+	public void searchCode() throws IOException {
+		System.out.print("Ingrese el código de la película a buscar: ");
+		int codigo = Integer.parseInt(lector.readLine());
+		Pelicula peli = almacen1.buscarPorCodigo(codigo);
+		if(peli == null) System.out.println("Película no encontrada");
+		else datosPelicula(peli);
+	}
+	
+	public void searchTitle() throws IOException {
+		System.out.print("Ingrese el título de la película a buscar: ");
+		String title = lector.readLine();
+		Pelicula peli = almacen1.buscarPorTitulo(title);
+		if(peli == null) System.out.println("Película no encontrada");
+		else datosPelicula(peli);
+	}
+	
+	public void datosPelicula(Pelicula peli) {
+		System.out.println("Título: " + peli.getTitulo());
+		System.out.println("Código: " + peli.getCodigo());
+		System.out.println("Género: " + peli.getGenero());
+		System.out.println("Año: " + peli.getAño());
+		System.out.println("Director: " + peli.getDirector());
+	}
 }
+
+
+
