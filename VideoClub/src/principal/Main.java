@@ -5,6 +5,11 @@ public class Main {
 	public static void main(String arr[]) throws IOException {
 		//objeto lector
 		BufferedReader lector = new BufferedReader(new InputStreamReader(System.in));
+		Almacén almacen1 = new Almacén();
+		almacen1.Datos();
+		for(int i = 0; i < almacen1.getPelículas().size(); i++) {
+			System.out.println(almacen1.getPelículas().get(i).getTitulo());
+		}
 		
 		//Menu principal
 		int opcion;

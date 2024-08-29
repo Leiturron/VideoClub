@@ -1,5 +1,6 @@
 package principal;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +31,27 @@ public class Almacén {
 
 	public HashMap<Integer, ArrayList<Pelicula>> getMapaDécadas() {
 		return mapaDécadas;
+	}
+	
+	public void Datos() throws IOException {
+		File file;
+		file = new File("D:\\Windows\\Escritorio\\学习资料\\Universidad\\Season_4\\Programación avanzada\\Project\\SIA\\Repository\\VideoClub\\src\\recursos\\infoPeliculas.csv");
+		
+		
+		try(BufferedReader reader = new BufferedReader(new FileReader(file))){
+			String linea = reader.readLine();
+			while((linea = reader.readLine()) != null) {
+				String[] datos = linea.split(",");
+				String codigo = datos[0];
+				String titulo = datos[1];
+				String director = datos[2];
+				String genero = datos[3];
+				int año = Integer.parseInt(datos[4]);
+				int stock = Integer.parseInt(datos[5]);
+				Pelicula peli = new Pelicula(codigo, titulo, director, genero, año, stock);
+				agregarPelícula(peli);
+			}
+		}
 	}
 	
 	public void agregarPelícula(Pelicula película) {
