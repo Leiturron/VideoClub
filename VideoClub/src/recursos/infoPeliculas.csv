@@ -1,14 +1,14 @@
 código,título,director,género,año,stock
-A001,The Shawshank Redemption,Frank Darabont,Drama,1994,21
-A002,The Godfather,Francis Ford Coppola,Crime,1972,13
-A003,The Dark Knight,Christopher Nolan,Crime,2008,18
-A004,Your Name,Makoto Shinkai,Romance,2016,14
-A005,5 Centimeters per Second,Makoto Shinkai,Romance,2007,11
-A006,El viaje de Chihiro,Hayao Miyazaki,Aventura,2001,15
-A007,Jimmy Neutron: Boy Genius,John A.Davis,Comedy,2001,16
-A008,Forrest Gump,Robert Zemeckis,Drama,1994,10
-A009,Jurassic Park,Steven Spielberg,Thriller,1993,9
-A010,Inception,Christopher Nolan,Thriller,2010,13
-A011,The Pianist,Roman Polanski,Biography,2002,15
-A012,The Shining,Stanley Kubrick,Horror,1980,12
-A013,The Prestige,Christopher Nolan,Thriller,2006,5
+1,The Shawshank Redemption,Frank Darabont,Drama,1994,21
+2,The Godfather,Francis Ford Coppola,Crime,1972,13
+3,The Dark Knight,Christopher Nolan,Crime,2008,18
+4,Your Name,Makoto Shinkai,Romance,2016,14
+5,5 Centimeters per Second,Makoto Shinkai,Romance,2007,11
+6,El viaje de Chihiro,Hayao Miyazaki,Aventura,2001,15
+7,Jimmy Neutron: Boy Genius,John A.Davis,Comedy,2001,16
+8,Forrest Gump,Robert Zemeckis,Drama,1994,10
+9,Jurassic Park,Steven Spielberg,Thriller,1993,9
+10,Inception,Christopher Nolan,Thriller,2010,13
+11,The Pianist,Roman Polanski,Biography,2002,15
+12,The Shining,Stanley Kubrick,Horror,1980,12
+13,The Prestige,Christopher Nolan,Thriller,2006,5

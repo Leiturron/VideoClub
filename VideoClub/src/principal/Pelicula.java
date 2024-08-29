@@ -1,14 +1,14 @@
 package principal;
 
 public class Pelicula {
-	private String codigo;
+	private int codigo;
 	private String titulo;
 	private String director;
 	private String genero;
 	private int año;
 	private int stock;
 	
-	public Pelicula(String codigo, String titulo, String director, String genero, int año, int stock) {
+	public Pelicula(int codigo, String titulo, String director, String genero, int año, int stock) {
 		this.codigo = codigo;
 		this.titulo = titulo;
 		this.director = director;
@@ -17,11 +17,11 @@ public class Pelicula {
 		this.stock = stock;
 	}
 		
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 

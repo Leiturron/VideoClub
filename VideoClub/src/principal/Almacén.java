@@ -39,7 +39,7 @@ public class Almacén {
 			String linea = reader.readLine();
 			while((linea = reader.readLine()) != null) {
 				String[] datos = linea.split(",");
-				String codigo = datos[0];
+				int codigo = Integer.parseInt(datos[0]);
 				String titulo = datos[1];
 				String director = datos[2];
 				String genero = datos[3];
@@ -105,7 +105,7 @@ public class Almacén {
 		}
 	}
 	
-	public void buscarPelicula(String codigo) {
+	public void buscarPelicula(int codigo) {
 		for(short i = 0; i < películas.size(); i++) {
 			if(i == películas.size() - 1 && películas.get(i).getCodigo() != codigo) {
 				System.out.println("Película no encontrada");
