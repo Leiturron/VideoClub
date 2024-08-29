@@ -87,9 +87,9 @@ public class Almacén {
 		}
 	}
 	
-	public void buscarPelícula(String titulo) {
+	public void buscarPorTitulo(String titulo) {
 		for(short i = 0; i < películas.size(); i++) {
-			if(i == películas.size() - 1 && películas.get(i).getTitulo() != titulo) {
+			if(i == películas.size() - 1 && !películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
 				System.out.println("Película no encontrada");
 				break;
 			}
@@ -105,19 +105,77 @@ public class Almacén {
 		}
 	}
 	
-	public void buscarPelicula(int codigo) {
+	public void buscarPorCodigo(Integer codigo) {
 		for(short i = 0; i < películas.size(); i++) {
 			if(i == películas.size() - 1 && películas.get(i).getCodigo() != codigo) {
 				System.out.println("Película no encontrada");
+				System.out.println();
 				break;
 			}
 			else if(películas.get(i).getCodigo() == codigo) {
 				System.out.println("Película encontrada:");
 				System.out.println();
-				System.out.println("Título:" + películas.get(i).getTitulo());
-				System.out.println("Género:" + películas.get(i).getGenero());
-				System.out.println("Año:" + películas.get(i).getAño());
-				System.out.println("Director:" + películas.get(i).getDirector());
+				System.out.println("Título: " + películas.get(i).getTitulo());
+				System.out.println("Género: " + películas.get(i).getGenero());
+				System.out.println("Año: " + películas.get(i).getAño());
+				System.out.println("Director: " + películas.get(i).getDirector());
+				System.out.println("Stock: " + películas.get(i).getStock());
+				System.out.println();
+				System.out.println();
+			}
+		}
+	}
+	
+	public void buscarPorDirector(String director) {
+		if(mapaDirectores.get(director) == null) {
+			System.out.println("No existen películas dirigidas por " + director);
+			System.out.println();
+		}
+		else {
+			System.out.println("Películas dirigidas por " + director);
+			System.out.println();
+			for(short i = 0; i < mapaDirectores.get(director).size(); i++) {
+				System.out.println((i + 1) + "." + " Título: " + mapaDirectores.get(director).get(i).getTitulo());
+				System.out.println("   Género: " + mapaDirectores.get(director).get(i).getGenero());
+				System.out.println("   Año: " + mapaDirectores.get(director).get(i).getAño());
+				System.out.println("   Director: " + mapaDirectores.get(director).get(i).getAño());
+				System.out.println("   Stock: " + mapaDirectores.get(director).get(i).getStock());
+			}
+		}
+	}
+	
+	public void buscarPorGénero(String género) {
+		if(mapaGéneros.get(género) == null) {
+			System.out.println("No existen películas del género " + género);
+			System.out.println();
+		}
+		else {
+			System.out.println("Películas del género " + género);
+			System.out.println();
+			for(short i = 0; i < mapaGéneros.get(género).size(); i++) {
+				System.out.println((i + 1) + "." + " Título: " + mapaGéneros.get(género).get(i).getTitulo());
+				System.out.println("   Género: " + mapaGéneros.get(género).get(i).getGenero());
+				System.out.println("   Año: " + mapaGéneros.get(género).get(i).getAño());
+				System.out.println("   Director: " + mapaGéneros.get(género).get(i).getAño());
+				System.out.println("   Stock: " + mapaGéneros.get(género).get(i).getStock());
+			}
+		}
+	}
+	
+	public void buscarPorDécada(Integer década) {
+		if(mapaDécadas.get(década) == null) {
+			System.out.println("No existen películas en la década de " + década);
+			System.out.println();
+		}
+		else {
+			System.out.println("Películas en la década de" + década);
+			System.out.println();
+			for(short i = 0; i < mapaDécadas.get(década).size(); i++) {
+				System.out.println((i + 1) + "." + " Título: " + mapaDécadas.get(década).get(i).getTitulo());
+				System.out.println("   Género: " + mapaDécadas.get(década).get(i).getGenero());
+				System.out.println("   Año: " + mapaDécadas.get(década).get(i).getAño());
+				System.out.println("   Director: " + mapaDécadas.get(década).get(i).getAño());
+				System.out.println("   Stock: " + mapaDécadas.get(década).get(i).getStock());
 			}
 		}
 	}
