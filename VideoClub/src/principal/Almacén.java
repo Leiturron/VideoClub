@@ -75,8 +75,50 @@ public class Almacén {
 			if(películas.get(i).getTitulo() == película.getTitulo()) {
 				películas.remove(i);
 			}
-			
+			if(mapaGéneros.get(película.getGenero()).get(i).getTitulo() == película.getTitulo()) {
+				mapaGéneros.get(película.getGenero()).remove(i);
+			}
+			if(mapaDirectores.get(película.getDirector()).get(i).getDirector() == película.getDirector()) {
+				mapaDirectores.get(película.getDirector()).remove(i);
+			}
+			if(mapaDécadas.get(película.getDecada(película.getAño())).get(i).getAño() == película.getAño()) {
+				mapaDécadas.get(película.getDecada(película.getAño())).remove(i);
+			}
 		}
 	}
 	
+	public void buscarPelícula(String titulo) {
+		for(short i = 0; i < películas.size(); i++) {
+			if(i == películas.size() - 1 && películas.get(i).getTitulo() != titulo) {
+				System.out.println("Película no encontrada");
+				break;
+			}
+			else if(películas.get(i).getTitulo() == titulo) {
+				System.out.println("Película encontrada:");
+				System.out.println();
+				System.out.println("Título:" + películas.get(i).getTitulo());
+				System.out.println("Código:" + películas.get(i).getCodigo());
+				System.out.println("Género:" + películas.get(i).getGenero());
+				System.out.println("Año:" + películas.get(i).getAño());
+				System.out.println("Director:" + películas.get(i).getDirector());
+			}
+		}
+	}
+	
+	public void buscarPelicula(String codigo) {
+		for(short i = 0; i < películas.size(); i++) {
+			if(i == películas.size() - 1 && películas.get(i).getCodigo() != codigo) {
+				System.out.println("Película no encontrada");
+				break;
+			}
+			else if(películas.get(i).getCodigo() == codigo) {
+				System.out.println("Película encontrada:");
+				System.out.println();
+				System.out.println("Título:" + películas.get(i).getTitulo());
+				System.out.println("Género:" + películas.get(i).getGenero());
+				System.out.println("Año:" + películas.get(i).getAño());
+				System.out.println("Director:" + películas.get(i).getDirector());
+			}
+		}
+	}
 }
