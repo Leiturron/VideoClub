@@ -101,11 +101,12 @@ public class Almacén {
 				System.out.println("Género:" + películas.get(i).getGenero());
 				System.out.println("Año:" + películas.get(i).getAño());
 				System.out.println("Director:" + películas.get(i).getDirector());
+				break;
 			}
 		}
 	}
 	
-	public void buscarPorCodigo(Integer codigo) {
+	public void buscarPorCodigo(int codigo) {
 		for(short i = 0; i < películas.size(); i++) {
 			if(i == películas.size() - 1 && películas.get(i).getCodigo() != codigo) {
 				System.out.println("Película no encontrada");
@@ -120,8 +121,7 @@ public class Almacén {
 				System.out.println("Año: " + películas.get(i).getAño());
 				System.out.println("Director: " + películas.get(i).getDirector());
 				System.out.println("Stock: " + películas.get(i).getStock());
-				System.out.println();
-				System.out.println();
+				break;
 			}
 		}
 	}

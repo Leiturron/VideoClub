@@ -38,8 +38,6 @@ public class Menu {
 					break;
 			}
 			System.out.println();
-			System.out.println("Presiona ENTER para continuar");
-			lector.readLine();
 		}
 	}
 	
@@ -59,6 +57,7 @@ public class Menu {
 					break;
 				case 2:
 				case 3:
+					menuBuscar();
 				case 4:
 				default:
 			}
@@ -99,5 +98,35 @@ public class Menu {
 		int stock = Integer.parseInt(lector.readLine());
 		Pelicula peli = new Pelicula(codigo, titulo, director, genero, anno, stock);
 		almacen1.agregarPelícula(peli);
+	}
+	
+	public void menuBuscar() throws IOException{
+		while(true) {
+			System.out.println("Buscar Película");
+			System.out.println("1. Buscar por código");
+			System.out.println("2. Buscar por título");
+			System.out.println("3. Buscar por director");
+			System.out.println("4. Buscar por género");
+			System.out.println("5. Buscar por década");
+			System.out.println("6. Volver");
+			opcion = Integer.parseInt(lector.readLine());
+			if(opcion == 6) break;
+			switch(opcion) {
+				case 1:
+					System.out.print("Ingrese el código de la película a buscar: ");
+					int codigo = Integer.parseInt(lector.readLine());
+					almacen1.buscarPorCodigo(codigo);
+					break;
+				case 2:
+					
+				case 3:
+				case 4:
+				case 5:
+				default:
+			}
+			System.out.println();
+			System.out.println("Presiona ENTER para continuar");
+			lector.readLine();		
+			}
 	}
 }
