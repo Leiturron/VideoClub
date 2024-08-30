@@ -4,12 +4,12 @@ import java.util.ArrayList;
 public class Usuario {
 	private String nombre;
 	private int rut;
-	private ArrayList<Pelicula> peliculaPrestada;
+	private ArrayList<String> peliculaPrestada;
 	
 	public Usuario(String nombre, int rut) {
 		this.nombre = nombre;
 		this.rut = rut;
-		peliculaPrestada = new ArrayList<Pelicula>();
+		peliculaPrestada = new ArrayList<String>();
 	}
 
 	public String getNombre() {
@@ -28,7 +28,7 @@ public class Usuario {
 		this.rut = rut;
 	}
 
-	public ArrayList<Pelicula> getPeliculaPrestada() {
+	public ArrayList<String> getPeliculaPrestada() {
 		return peliculaPrestada;
 	}
 }
