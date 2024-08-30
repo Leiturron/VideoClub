@@ -3,6 +3,7 @@ package principal;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Menu {
 	private int opcion;
@@ -118,6 +119,7 @@ public class Menu {
 				case 2:
 					searchTitle();
 				case 3:
+					searchDirect();
 				case 4:
 				case 5:
 				default:
@@ -144,12 +146,28 @@ public class Menu {
 		else datosPelicula(peli);
 	}
 	
+	public void searchDirect()throws IOException {
+		System.out.println("Ingrese el nombre del director: ");
+		String nomb = lector.readLine();
+		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb);
+		if(array == null) System.out.println("No existe director llamado a " + nomb);
+		else {
+			System.out.println("Películas de " + nomb);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
+		
+	}
+	
 	public void datosPelicula(Pelicula peli) {
 		System.out.println("Título: " + peli.getTitulo());
 		System.out.println("Código: " + peli.getCodigo());
 		System.out.println("Género: " + peli.getGenero());
 		System.out.println("Año: " + peli.getAño());
 		System.out.println("Director: " + peli.getDirector());
+		System.out.println("Stock: " + peli.getStock());
 	}
 }
 

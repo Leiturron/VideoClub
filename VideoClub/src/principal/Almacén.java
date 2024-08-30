@@ -60,9 +60,9 @@ public class Almacén {
 		mapaGéneros.get(película.getGenero()).add(película);
 		if(mapaDirectores.get(película.getDirector()) == null) {
 			ArrayList<Pelicula> pelisDirector = new ArrayList<Pelicula>();
-			mapaGéneros.put(película.getDirector(), pelisDirector);
+			mapaDirectores.put(película.getDirector(), pelisDirector);
 		}
-		mapaGéneros.get(película.getDirector()).add(película);
+		mapaDirectores.get(película.getDirector()).add(película);
 		if(mapaDécadas.get(película.getDecada(película.getAño())) == null) {
 			ArrayList<Pelicula> pelisDécada = new ArrayList<Pelicula>();
 			mapaDécadas.put(película.getDecada(película.getAño()), pelisDécada);
@@ -95,26 +95,12 @@ public class Almacén {
 	
 	public Pelicula buscarPorTitulo(String titulo) {
 		for(short i = 0; i < películas.size(); i++) 
-			if(películas.get(i).getTitulo() == titulo) return películas.get(i);
+			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) return películas.get(i);
 		return null;
 	}
 	
-	public void buscarPorDirector(String director) {
-		if(mapaDirectores.get(director) == null) {
-			System.out.println("No existen películas dirigidas por " + director);
-			System.out.println();
-		}
-		else {
-			System.out.println("Películas dirigidas por " + director);
-			System.out.println();
-			for(short i = 0; i < mapaDirectores.get(director).size(); i++) {
-				System.out.println((i + 1) + "." + " Título: " + mapaDirectores.get(director).get(i).getTitulo());
-				System.out.println("   Género: " + mapaDirectores.get(director).get(i).getGenero());
-				System.out.println("   Año: " + mapaDirectores.get(director).get(i).getAño());
-				System.out.println("   Director: " + mapaDirectores.get(director).get(i).getAño());
-				System.out.println("   Stock: " + mapaDirectores.get(director).get(i).getStock());
-			}
-		}
+	public ArrayList<Pelicula> buscarPorDirector(String director) {
+		return mapaDirectores.get(director);
 	}
 	
 	public void buscarPorGénero(String género) {

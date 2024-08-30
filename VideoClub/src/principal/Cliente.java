@@ -54,13 +54,16 @@ public class Cliente {
 			}
 		}
 	}
+	/*
 	public boolean buscarUsuario(String usuario) {
-		return cliente.contains(usuario);
+		//return cliente.contains(usuario);
 	}
 	public void enlistarUsuario() {
 		System.out.println("Lista de Usuarios:");
+		/*
 		for(String usuario : cliente) {
 			System.out.println(usuario);
 		}
-	}
+		*/
 }
+
