@@ -59,8 +59,12 @@ public class Menu {
 				case 2:
 				case 3:
 					menuBuscar();
+					break;
 				case 4:
+					listarPeli();
+					break;
 				default:
+					System.out.println("Opción invalida");
 			}
 		}
 	}
@@ -86,19 +90,22 @@ public class Menu {
 	}
 	
 	public void addNewPeli() throws IOException {
-		int codigo = almacen1.getPelículas().size();
+		int codigo = almacen1.getPelículas().size() + 1;
 		System.out.print("Ingrese el título de la película: ");
 		String titulo = lector.readLine();
 		System.out.print("Ingrese el director de la película: ");
 		String director = lector.readLine();
-		System.out.println("Ingrese el género: ");
+		System.out.print("Ingrese el género: ");
 		String genero = lector.readLine();
 		System.out.print("Ingrese el año de estreno: ");
 		int anno = Integer.parseInt(lector.readLine());
-		System.out.println("Ingrese el Stock");
+		System.out.print("Ingrese el Stock: ");
 		int stock = Integer.parseInt(lector.readLine());
 		Pelicula peli = new Pelicula(codigo, titulo, director, genero, anno, stock);
 		almacen1.agregarPelícula(peli);
+		System.out.println();
+		System.out.println("Presiona ENTER para continuar");
+		lector.readLine();	
 	}
 	
 	public void menuBuscar() throws IOException{
@@ -134,7 +141,7 @@ public class Menu {
 			}
 			System.out.println();
 			System.out.println("Presiona ENTER para continuar");
-			lector.readLine();		
+			lector.readLine();	
 			}
 	}
 	
@@ -204,6 +211,17 @@ public class Menu {
 		System.out.println("Año: " + peli.getAño());
 		System.out.println("Director: " + peli.getDirector());
 		System.out.println("Stock: " + peli.getStock());
+	}
+	
+	public void listarPeli() throws IOException{
+		System.out.println("Lista de las películas");
+		for(int i= 0; i < almacen1.getPelículas().size(); i++) {
+			System.out.println();
+			datosPelicula(almacen1.getPelículas().get(i));
+		}
+		System.out.println();
+		System.out.println("Presiona ENTER para continuar");
+		lector.readLine();
 	}
 }
 
