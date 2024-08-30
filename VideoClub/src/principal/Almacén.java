@@ -103,22 +103,8 @@ public class Almacén {
 		return mapaDirectores.get(director);
 	}
 	
-	public void buscarPorGénero(String género) {
-		if(mapaGéneros.get(género) == null) {
-			System.out.println("No existen películas del género " + género);
-			System.out.println();
-		}
-		else {
-			System.out.println("Películas del género " + género);
-			System.out.println();
-			for(short i = 0; i < mapaGéneros.get(género).size(); i++) {
-				System.out.println((i + 1) + "." + " Título: " + mapaGéneros.get(género).get(i).getTitulo());
-				System.out.println("   Género: " + mapaGéneros.get(género).get(i).getGenero());
-				System.out.println("   Año: " + mapaGéneros.get(género).get(i).getAño());
-				System.out.println("   Director: " + mapaGéneros.get(género).get(i).getAño());
-				System.out.println("   Stock: " + mapaGéneros.get(género).get(i).getStock());
-			}
-		}
+	public ArrayList<Pelicula> buscarPorGénero(String género) {
+		return mapaGéneros.get(género);
 	}
 	
 	public void buscarPorDécada(int década) {

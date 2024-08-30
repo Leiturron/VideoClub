@@ -121,6 +121,7 @@ public class Menu {
 				case 3:
 					searchDirect();
 				case 4:
+					searchGener();
 				case 5:
 				default:
 			}
@@ -158,7 +159,20 @@ public class Menu {
 				datosPelicula(array.get(i));
 			}
 		}
-		
+	}
+	
+	public void searchGener() throws IOException {
+		System.out.println("Ingrese el género de la película: ");
+		String genero = lector.readLine();
+		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero);
+		if(array == null) System.out.println("No existe película de género " + genero);
+		else {
+			System.out.println("Películas de " + genero);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
 	}
 	
 	public void datosPelicula(Pelicula peli) {
