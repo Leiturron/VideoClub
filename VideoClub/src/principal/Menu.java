@@ -57,11 +57,16 @@ public class Menu {
 					addNewPeli();
 					break;
 				case 2:
+					menuEliminar();
+					break;
 				case 3:
 					menuBuscar();
 					break;
 				case 4:
 					listarPeli();
+					System.out.println();
+					System.out.println("Presiona ENTER para continuar");
+					lector.readLine();
 					break;
 				default:
 					System.out.println("Opción invalida");
@@ -104,6 +109,7 @@ public class Menu {
 		Pelicula peli = new Pelicula(codigo, titulo, director, genero, anno, stock);
 		almacen1.agregarPelícula(peli);
 		System.out.println();
+		System.out.println("Se agregó correctamente");
 		System.out.println("Presiona ENTER para continuar");
 		lector.readLine();	
 	}
@@ -219,9 +225,51 @@ public class Menu {
 			System.out.println();
 			datosPelicula(almacen1.getPelículas().get(i));
 		}
-		System.out.println();
-		System.out.println("Presiona ENTER para continuar");
-		lector.readLine();
+	}
+	
+	public void menuEliminar() throws IOException {
+		while(true) {
+			System.out.println("Eliminar una película");
+			System.out.println("1. Eliminar por código");
+			System.out.println("2. Eliminar por título");
+			System.out.println("3. Volver");
+			opcion = Integer.parseInt(lector.readLine());
+			if(opcion == 3) return;
+			System.out.print("Deseas ver la lista de las películas? (s/n): ");
+			String opcionL = lector.readLine();
+			if(opcionL.equalsIgnoreCase("s")) 
+				listarPeli();
+			else if(!opcionL.equalsIgnoreCase("n")) System.out.println("Opcion invalida (NO por defecto)");
+			switch(opcion) {
+				case 1:
+					eliminarCode();
+					break;
+				case 2:
+					eliminarTitle();
+					break;
+				default:
+					System.out.println("Opcion invalida");
+			}
+			System.out.println();
+			System.out.println("Presiona ENTER para continuar");
+			lector.readLine();	
+		}
+	}
+	
+	public void eliminarCode() throws IOException {
+		System.out.print("Ingrese el código de la película (0 para cancelar): ");
+		int code = Integer.parseInt(lector.readLine());
+		if(code == 0) return;
+		almacen1.eliminarPelícula(code);
+		System.out.println("Se eliminó correctamente");
+	}
+	
+	public void eliminarTitle() throws IOException {
+		System.out.print("Ingrese el título de la película (0 para cancelar): ");
+		String title = lector.readLine();
+		if(title.equals("0")) return;
+		almacen1.eliminarPelícula(title);
+		System.out.println("Se eliminó correctamente");
 	}
 }
 

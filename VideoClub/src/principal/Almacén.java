@@ -78,19 +78,22 @@ public class Almacén {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
 				película = películas.remove(i);
-				for(short j = 0; j < mapaGéneros.get(película.getGenero()).size(); j++) {
-					if(mapaGéneros.get(película.getGenero()).get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						mapaGéneros.get(película.getGenero()).remove(j);
+				ArrayList<Pelicula> arr = mapaGéneros.get(película.getGenero().toUpperCase());
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
+						arr.remove(j);
 					}
 				}
-				for(short j = 0; j < mapaDirectores.get(película.getDirector()).size(); j++) {
-					if(mapaDirectores.get(película.getDirector()).get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						mapaDirectores.get(película.getDirector()).remove(j);
+				arr = mapaDirectores.get(película.getDirector().toUpperCase());
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
+						arr.remove(j);
 					}
 				}
-				for(short j = 0; j < mapaDécadas.get(película.getDecada(película.getAño())).size(); j++) {
-					if(mapaDécadas.get(película.getDecada(película.getAño())).get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						mapaDécadas.get(película.getDecada(película.getAño())).remove(j);
+				arr = mapaDécadas.get(película.getDecada(película.getAño()));
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
+						arr.remove(j);
 					}
 				}
 				return;
@@ -105,23 +108,27 @@ public class Almacén {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getCodigo() == código) {
 				película = películas.remove(i);
-				for(short j = 0; j < mapaGéneros.get(película.getGenero()).size(); j++) {
-					if(mapaGéneros.get(película.getGenero()).get(j).getCodigo() == código) {
-						mapaGéneros.get(película.getGenero()).remove(j);
+				ArrayList<Pelicula> arr = mapaGéneros.get(película.getGenero().toUpperCase());
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getCodigo() == código) {
+						arr.remove(j);
 					}
 				}
-				for(short j = 0; j < mapaDirectores.get(película.getDirector()).size(); j++) {
-					if(mapaDirectores.get(película.getDirector()).get(j).getCodigo() == código) {
-						mapaDirectores.get(película.getDirector()).remove(j);
+				arr = mapaDirectores.get(película.getDirector().toUpperCase());
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getCodigo() == código) {
+						arr.remove(j);
 					}
 				}
-				for(short j = 0; j < mapaDécadas.get(película.getDecada(película.getAño())).size(); j++) {
-					if(mapaDécadas.get(película.getDecada(película.getAño())).get(j).getCodigo() == código) {
-						mapaDécadas.get(película.getDecada(película.getAño())).remove(j);
+				arr = mapaDécadas.get(película.getDecada(película.getAño()));
+				for(short j = 0; j < arr.size(); j++) {
+					if(arr.get(j).getCodigo() == código) {
+						arr.remove(j);
 					}
 				}
 				return;
 			}
+		
 		}
 		System.out.println("Película con código " + código + " no encontrada");
 		System.out.println();
