@@ -53,16 +53,19 @@ public class Almacén {
 	
 	public void agregarPelícula(Pelicula película) {
 		películas.add(película);
-		if(mapaGéneros.get(película.getGenero()) == null) {
+		
+		if(mapaGéneros.get(película.getGenero().toUpperCase()) == null) {
 			ArrayList<Pelicula> pelisGénero = new ArrayList<Pelicula>();
-			mapaGéneros.put(película.getGenero(), pelisGénero);
+			mapaGéneros.put(película.getGenero().toUpperCase(), pelisGénero);
 		}
-		mapaGéneros.get(película.getGenero()).add(película);
-		if(mapaDirectores.get(película.getDirector()) == null) {
+		mapaGéneros.get(película.getGenero().toUpperCase()).add(película);
+		
+		if(mapaDirectores.get(película.getDirector().toUpperCase()) == null) {
 			ArrayList<Pelicula> pelisDirector = new ArrayList<Pelicula>();
-			mapaDirectores.put(película.getDirector(), pelisDirector);
+			mapaDirectores.put(película.getDirector().toUpperCase(), pelisDirector);
 		}
-		mapaDirectores.get(película.getDirector()).add(película);
+		mapaDirectores.get(película.getDirector().toUpperCase()).add(película);
+		
 		if(mapaDécadas.get(película.getDecada(película.getAño())) == null) {
 			ArrayList<Pelicula> pelisDécada = new ArrayList<Pelicula>();
 			mapaDécadas.put(película.getDecada(película.getAño()), pelisDécada);
@@ -107,21 +110,7 @@ public class Almacén {
 		return mapaGéneros.get(género);
 	}
 	
-	public void buscarPorDécada(int década) {
-		if(mapaDécadas.get(década) == null) {
-			System.out.println("No existen películas en la década de " + década);
-			System.out.println();
-		}
-		else {
-			System.out.println("Películas en la década de" + década);
-			System.out.println();
-			for(short i = 0; i < mapaDécadas.get(década).size(); i++) {
-				System.out.println((i + 1) + "." + " Título: " + mapaDécadas.get(década).get(i).getTitulo());
-				System.out.println("   Género: " + mapaDécadas.get(década).get(i).getGenero());
-				System.out.println("   Año: " + mapaDécadas.get(década).get(i).getAño());
-				System.out.println("   Director: " + mapaDécadas.get(década).get(i).getAño());
-				System.out.println("   Stock: " + mapaDécadas.get(década).get(i).getStock());
-			}
-		}
+	public ArrayList<Pelicula> buscarPorDécada(int década) {
+		return mapaDécadas.get(década);
 	}
 }

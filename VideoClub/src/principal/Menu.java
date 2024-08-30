@@ -118,12 +118,19 @@ public class Menu {
 					break;
 				case 2:
 					searchTitle();
+					break;
 				case 3:
 					searchDirect();
+					break;
 				case 4:
 					searchGener();
+					break;
 				case 5:
+					searchDecada();
+					break;
 				default:
+					System.out.println("Opción Invalido");
+					break;
 			}
 			System.out.println();
 			System.out.println("Presiona ENTER para continuar");
@@ -142,15 +149,15 @@ public class Menu {
 	public void searchTitle() throws IOException {
 		System.out.print("Ingrese el título de la película a buscar: ");
 		String title = lector.readLine();
-		Pelicula peli = almacen1.buscarPorTitulo(title);
+		Pelicula peli = almacen1.buscarPorTitulo(title.toUpperCase());
 		if(peli == null) System.out.println("Película no encontrada");
 		else datosPelicula(peli);
 	}
 	
 	public void searchDirect()throws IOException {
-		System.out.println("Ingrese el nombre del director: ");
+		System.out.print("Ingrese el nombre del director: ");
 		String nomb = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb);
+		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb.toUpperCase());
 		if(array == null) System.out.println("No existe director llamado a " + nomb);
 		else {
 			System.out.println("Películas de " + nomb);
@@ -162,12 +169,27 @@ public class Menu {
 	}
 	
 	public void searchGener() throws IOException {
-		System.out.println("Ingrese el género de la película: ");
+		System.out.print("Ingrese el género de la película: ");
 		String genero = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero);
+		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero.toUpperCase());
 		if(array == null) System.out.println("No existe película de género " + genero);
 		else {
 			System.out.println("Películas de " + genero);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
+	}
+	
+	public void searchDecada() throws IOException {
+		System.out.print("Ingrese el año (El sistema lo transforma a década): ");
+		int anno = Integer.parseInt(lector.readLine());
+		int decada = anno - anno % 10;
+		ArrayList<Pelicula> array = almacen1.buscarPorDécada(decada);
+		if(array == null) System.out.println("No existe película de década " + decada);
+		else {
+			System.out.println("Películas de década " + decada);
 			for(int i = 0; i < array.size(); i++) {
 				System.out.println();
 				datosPelicula(array.get(i));
