@@ -99,13 +99,13 @@ public class Menu {
 					addPrestamo();
 					break;
 				case 2:
-					//deletePrestamo();
+					deletePrestamo();
 					break;
 				case 3:
-					//searchUser();
+					searchUser();
 					break;
 				case 4:
-					//listarUser();
+					listUser();
 					break;
 				default:
 					System.out.println("Opcion Invalida");
@@ -369,6 +369,59 @@ public class Menu {
 		
 	}
 	
+	public void deletePrestamo() throws IOException {
+		System.out.print("Ingrese el rut del usuario");
+		String rut = lector.readLine();
+		Usuario user = clientes1.buscarUsuario(rut);
+		if(user != null) {
+			System.out.println("Se encontró el usuario " + user.getNombre());
+			System.out.println();
+			if(user.getPeliculaPrestada().size() != 0) {
+				System.out.println("Películas prestadas:");
+				System.out.println();
+				for(short i = 0; i < user.getPeliculaPrestada().size(); i++) {
+					System.out.println((i + 1) + ". " + user.getPeliculaPrestada().get(i));
+				}
+				System.out.println();
+				System.out.print("Ingrese el número de la película a devolver: ");
+				int número = Integer.parseInt(lector.readLine());
+				clientes1.eliminarPrestamo(user, user.getPeliculaPrestada().get(número - 1));
+				System.out.println();
+				System.out.println("Película devuelta con éxito");
+			}
+			else {
+				System.out.println("El usuario no tiene películas prestadas");
+			}
+		}
+	}
+	
+	public void searchUser() throws IOException {
+		System.out.print("Ingrese el rut del usuario: ");
+		System.out.println();
+		String rut = lector.readLine();
+		Usuario user = clientes1.buscarUsuario(rut);
+		if(user != null) {
+			System.out.println("Usuario encontrado:");
+			System.out.println();
+			user.datos();
+		}
+	}
+	
+	public void listUser() {
+		if(clientes1.getCliente().size() != 0) {
+			System.out.println("Lista de usuarios registrados:");
+			System.out.println();
+			for(short i = 0; i < clientes1.getCliente().size(); i++) {
+				System.out.print((i + 1) + ".");
+				clientes1.getCliente().get(i).datos();
+				System.out.println();
+			}
+		}
+		else {
+			System.out.println("No hay usuarios registrados para mostrar");
+			System.out.println();
+		}
+	}
 }
 
 

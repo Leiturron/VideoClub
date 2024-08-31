@@ -19,7 +19,7 @@ public class Cliente {
 				return;
 			}
 		}
-		System.out.println("No se encontró película " + prestamo + " en el prestamo del usuario");
+		System.out.println("No se encontró película " + prestamo + " en los prestamos del usuario");
 		System.out.println();
 	}
 	
