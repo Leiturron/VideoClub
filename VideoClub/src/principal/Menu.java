@@ -9,13 +9,17 @@ public class Menu {
 	private int opcion;
 	private BufferedReader lector;
 	private Almacén almacen1;
+	private Cliente clientes1;
 	
 	public Menu() throws IOException {
 		almacen1 = new Almacén();
 		almacen1.Datos();
+		clientes1 = new Cliente();
 		lector = new BufferedReader(new InputStreamReader(System.in));
 	}
-	
+	//-----------------------------------------------------------------|
+	//-------------------------Menu principal--------------------------|
+	//-----------------------------------------------------------------|
 	public void menuPrincipal() throws IOException {
 		int opcion;
 		while(true) {
@@ -42,6 +46,9 @@ public class Menu {
 		}
 	}
 	
+	//-----------------------------------------------------------------|
+	//-------------------Menu gestion de las peliculas-----------------|
+	//-----------------------------------------------------------------|
 	public void gestionPeliculas() throws IOException {
 		while(true) {
 			System.out.println("Gestión de películas");
@@ -74,6 +81,9 @@ public class Menu {
 		}
 	}
 	
+	//-----------------------------------------------------------------|
+	//--------------------Menu gestion de los usuarios-----------------|
+	//-----------------------------------------------------------------|
 	public void gestionUsuarios() throws IOException {
 		while(true) {
 			System.out.println("Gestion de usuarios");
@@ -86,14 +96,51 @@ public class Menu {
 			if(opcion == 5) break;
 			switch(opcion) {
 				case 1:
+					addPrestamo();
+					break;
 				case 2:
+					//deletePrestamo();
+					break;
 				case 3:
+					//searchUser();
+					break;
 				case 4:
+					//listarUser();
+					break;
 				default:
+					System.out.println("Opcion Invalida");
 			}
 		}
 	}
 	
+	//-----------------------------------------------------------------|
+	//---------------------------Herramientas--------------------------|
+	//-----------------------------------------------------------------|
+	
+	//---------------------Imprimir datos de la pelicula---------------|
+	public void datosPelicula(Pelicula peli) {
+		System.out.println("Título: " + peli.getTitulo());
+		System.out.println("Código: " + peli.getCodigo());
+		System.out.println("Género: " + peli.getGenero());
+		System.out.println("Año: " + peli.getAño());
+		System.out.println("Director: " + peli.getDirector());
+		System.out.println("Stock: " + peli.getStock());
+	}
+	
+	//------------------------Listar peliculas-------------------------|
+	public void listarPeli() throws IOException{
+		System.out.println("Lista de las películas");
+		for(int i= 0; i < almacen1.getPelículas().size(); i++) {
+			System.out.println();
+			datosPelicula(almacen1.getPelículas().get(i));
+		}
+	}
+	
+	//-----------------------------------------------------------------|
+	//--------------Opciones del menu gestion pelicula-----------------|
+	//-----------------------------------------------------------------|
+	
+	//---------------------- 1. Agregar película-----------------------|
 	public void addNewPeli() throws IOException {
 		int codigo = almacen1.getPelículas().size() + 1;
 		System.out.print("Ingrese el título de la película: ");
@@ -114,119 +161,7 @@ public class Menu {
 		lector.readLine();	
 	}
 	
-	public void menuBuscar() throws IOException{
-		while(true) {
-			System.out.println("Buscar Película");
-			System.out.println("1. Buscar por código");
-			System.out.println("2. Buscar por título");
-			System.out.println("3. Buscar por director");
-			System.out.println("4. Buscar por género");
-			System.out.println("5. Buscar por década");
-			System.out.println("6. Volver");
-			opcion = Integer.parseInt(lector.readLine());
-			if(opcion == 6) break;
-			switch(opcion) {
-				case 1:
-					searchCode();
-					break;
-				case 2:
-					searchTitle();
-					break;
-				case 3:
-					searchDirect();
-					break;
-				case 4:
-					searchGener();
-					break;
-				case 5:
-					searchDecada();
-					break;
-				default:
-					System.out.println("Opción Invalido");
-					break;
-			}
-			System.out.println();
-			System.out.println("Presiona ENTER para continuar");
-			lector.readLine();	
-			}
-	}
-	
-	public void searchCode() throws IOException {
-		System.out.print("Ingrese el código de la película a buscar: ");
-		int codigo = Integer.parseInt(lector.readLine());
-		Pelicula peli = almacen1.buscarPorCodigo(codigo);
-		if(peli == null) System.out.println("Película no encontrada");
-		else datosPelicula(peli);
-	}
-	
-	public void searchTitle() throws IOException {
-		System.out.print("Ingrese el título de la película a buscar: ");
-		String title = lector.readLine();
-		Pelicula peli = almacen1.buscarPorTitulo(title.toUpperCase());
-		if(peli == null) System.out.println("Película no encontrada");
-		else datosPelicula(peli);
-	}
-	
-	public void searchDirect()throws IOException {
-		System.out.print("Ingrese el nombre del director: ");
-		String nomb = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb.toUpperCase());
-		if(array == null) System.out.println("No existe director llamado a " + nomb);
-		else {
-			System.out.println("Películas de " + nomb);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
-		}
-	}
-	
-	public void searchGener() throws IOException {
-		System.out.print("Ingrese el género de la película: ");
-		String genero = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero.toUpperCase());
-		if(array == null) System.out.println("No existe película de género " + genero);
-		else {
-			System.out.println("Películas de " + genero);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
-		}
-	}
-	
-	public void searchDecada() throws IOException {
-		System.out.print("Ingrese el año (El sistema lo transforma a década): ");
-		int anno = Integer.parseInt(lector.readLine());
-		int decada = anno - anno % 10;
-		ArrayList<Pelicula> array = almacen1.buscarPorDécada(decada);
-		if(array == null) System.out.println("No existe película de década " + decada);
-		else {
-			System.out.println("Películas de década " + decada);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
-		}
-	}
-	
-	public void datosPelicula(Pelicula peli) {
-		System.out.println("Título: " + peli.getTitulo());
-		System.out.println("Código: " + peli.getCodigo());
-		System.out.println("Género: " + peli.getGenero());
-		System.out.println("Año: " + peli.getAño());
-		System.out.println("Director: " + peli.getDirector());
-		System.out.println("Stock: " + peli.getStock());
-	}
-	
-	public void listarPeli() throws IOException{
-		System.out.println("Lista de las películas");
-		for(int i= 0; i < almacen1.getPelículas().size(); i++) {
-			System.out.println();
-			datosPelicula(almacen1.getPelículas().get(i));
-		}
-	}
-	
+	//---------------------- 2. Eliminar película----------------------|
 	public void menuEliminar() throws IOException {
 		while(true) {
 			System.out.println("Eliminar una película");
@@ -271,6 +206,169 @@ public class Menu {
 		almacen1.eliminarPelícula(title);
 		System.out.println("Se eliminó correctamente");
 	}
+	
+	//------------------------ 3. Buscar película----------------------|
+	public void menuBuscar() throws IOException{
+		while(true) {
+			System.out.println("Buscar Película");
+			System.out.println("1. Buscar por código");
+			System.out.println("2. Buscar por título");
+			System.out.println("3. Buscar por director");
+			System.out.println("4. Buscar por género");
+			System.out.println("5. Buscar por década");
+			System.out.println("6. Volver");
+			opcion = Integer.parseInt(lector.readLine());
+			if(opcion == 6) break;
+			switch(opcion) {
+				case 1:
+					searchCode();
+					break;
+				case 2:
+					searchTitle();
+					break;
+				case 3:
+					searchDirect();
+					break;
+				case 4:
+					searchGener();
+					break;
+				case 5:
+					searchDecada();
+					break;
+				default:
+					System.out.println("Opción Invalido");
+					break;
+			}
+			System.out.println();
+			System.out.println("Presiona ENTER para continuar");
+			lector.readLine();	
+			}
+	}
+	
+	//Buscar por codigo
+	public void searchCode() throws IOException {
+		System.out.print("Ingrese el código de la película a buscar: ");
+		int codigo = Integer.parseInt(lector.readLine());
+		Pelicula peli = almacen1.buscarPorCodigo(codigo);
+		if(peli == null) System.out.println("Película no encontrada");
+		else datosPelicula(peli);
+	}
+	
+	//Buscar por titulo
+	public void searchTitle() throws IOException {
+		System.out.print("Ingrese el título de la película a buscar: ");
+		String title = lector.readLine();
+		Pelicula peli = almacen1.buscarPorTitulo(title.toUpperCase());
+		if(peli == null) System.out.println("Película no encontrada");
+		else datosPelicula(peli);
+	}
+	
+	//Buscar por director
+	public void searchDirect()throws IOException {
+		System.out.print("Ingrese el nombre del director: ");
+		String nomb = lector.readLine();
+		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb.toUpperCase());
+		if(array == null) System.out.println("No existe director llamado a " + nomb);
+		else {
+			System.out.println("Películas de " + nomb);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
+	}
+	
+	//Buscar por genero
+	public void searchGener() throws IOException {
+		System.out.print("Ingrese el género de la película: ");
+		String genero = lector.readLine();
+		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero.toUpperCase());
+		if(array == null) System.out.println("No existe película de género " + genero);
+		else {
+			System.out.println("Películas de " + genero);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
+	}
+	
+	//Buscar por decada
+	public void searchDecada() throws IOException {
+		System.out.print("Ingrese el año (El sistema lo transforma a década): ");
+		int anno = Integer.parseInt(lector.readLine());
+		int decada = anno - anno % 10;
+		ArrayList<Pelicula> array = almacen1.buscarPorDécada(decada);
+		if(array == null) System.out.println("No existe película de década " + decada);
+		else {
+			System.out.println("Películas de década " + decada);
+			for(int i = 0; i < array.size(); i++) {
+				System.out.println();
+				datosPelicula(array.get(i));
+			}
+		}
+	}
+	
+	//-----------------------------------------------------------------|
+	//-----------------Opciones del menu gestion usuario---------------|
+	//-----------------------------------------------------------------|
+	
+	
+	//Borrador no completo
+	public void addPrestamo() throws IOException {
+		System.out.print("Ingrese el rut del usuario: ");
+		String rut = lector.readLine();
+		Usuario user = clientes1.buscarUsuario(rut);
+		if(user != null) {
+			System.out.println("Se encontró el usuario: " + user.getNombre());
+			System.out.println("Ingrese el título de la película a prestar: ");
+			while(true) {
+				String titulo = lector.readLine();
+				Pelicula peli = almacen1.buscarPorTitulo(titulo);
+				if(peli != null) {
+					if(peli.getStock() != 0) {
+						peli.prestar();
+						clientes1.agregarPrestamo(rut, titulo);
+					}
+					else
+						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
+					break;
+					
+				}
+				else {
+					System.out.println("No encontró esta película, ingrese denuevo: ");
+				}
+			}
+		}
+		else
+		{
+			System.out.println("Registrando un nuevo usuario");
+			System.out.print("Ingrese el nombre: ");
+			String nombre = lector.readLine();
+			System.out.println("Ingrese el título de la película a prestar: ");
+			while(true) {
+				String titulo = lector.readLine();
+				Pelicula peli = almacen1.buscarPorTitulo(titulo);
+				if(peli != null) {
+					if(peli.getStock() != 0) {
+						peli.prestar();
+						Usuario userx = new Usuario(nombre, rut);
+						clientes1.agregarPrestamo(userx, titulo);
+					}
+					else
+						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
+					break;
+					
+				}
+				else {
+					System.out.println("No encontró esta película, ingrese denuevo: ");
+				}
+			}
+			
+		}
+		
+	}
+	
 }
 
 

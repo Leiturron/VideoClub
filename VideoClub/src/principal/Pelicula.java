@@ -58,4 +58,12 @@ public class Pelicula {
 	public int getDecada(int año) {
 		return año - (año % 10);
 	}
+	
+	public void prestar() {
+		stock--;
+	}
+	
+	public void devolver() {
+		stock++;
+	}
 }
