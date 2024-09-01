@@ -420,6 +420,7 @@ public class Menu {
 			for(String key: clientes1.getCliente().keySet()) {
 				System.out.println("Usuario " + i);
 				clientes1.getCliente().get(key).datos();
+				i++;
 			}
 		}
 		else {
