@@ -312,14 +312,13 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-----------------Opciones del menu gestion usuario---------------|
 	//-----------------------------------------------------------------|
-	
-	
-	//Borrador no completo
+
+	//-----------------------1. Agregar un préstamo--------------------|
 	public void addPrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
 		Usuario user = clientes1.buscarUsuario(rut);
-		if(user != null) {
+		if(user != null) {  //Usuario existente
 			System.out.println("Se encontró el usuario: " + user.getNombre());
 			System.out.println("Ingrese el título de la película a prestar: ");
 			while(true) {
@@ -328,23 +327,21 @@ public class Menu {
 				if(peli != null) {
 					if(peli.getStock() != 0) {
 						peli.prestar();
-						clientes1.agregarPrestamo(rut, titulo);
+						clientes1.agregarPrestamo(rut, peli);
 					}
 					else
 						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
 					break;
-					
 				}
-				else {
-					System.out.println("No encontró esta película, ingrese denuevo: ");
-				}
+				else System.out.print("No encontró esta película, ingrese denuevo: ");
 			}
 		}
-		else
+		else            //Usuario no esxistente
 		{
 			System.out.println("Registrando un nuevo usuario");
-			System.out.print("Ingrese el nombre: ");
+			System.out.print("Ingrese el nombre del usuario: ");
 			String nombre = lector.readLine();
+			Usuario newUser = new Usuario(nombre, rut);
 			System.out.println("Ingrese el título de la película a prestar: ");
 			while(true) {
 				String titulo = lector.readLine();
@@ -352,25 +349,21 @@ public class Menu {
 				if(peli != null) {
 					if(peli.getStock() != 0) {
 						peli.prestar();
-						Usuario userx = new Usuario(nombre, rut);
-						clientes1.agregarPrestamo(userx, titulo);
+						clientes1.agregarPrestamo(newUser, peli);
 					}
 					else
 						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
 					break;
 					
 				}
-				else {
-					System.out.println("No encontró esta película, ingrese denuevo: ");
-				}
+				else System.out.println("No encontró esta película, ingrese denuevo: ");
 			}
-			
-		}
-		
+		}	
 	}
 	
+	//-----------------------2. Eliminar un préstamo-------------------|
 	public void deletePrestamo() throws IOException {
-		System.out.print("Ingrese el rut del usuario");
+		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
 		Usuario user = clientes1.buscarUsuario(rut);
 		if(user != null) {
@@ -380,21 +373,31 @@ public class Menu {
 				System.out.println("Películas prestadas:");
 				System.out.println();
 				for(short i = 0; i < user.getPeliculaPrestada().size(); i++) {
-					System.out.println((i + 1) + ". " + user.getPeliculaPrestada().get(i));
+					System.out.println((i + 1) + ". " + user.getPeliculaPrestada().get(i).getTitulo());
 				}
 				System.out.println();
 				System.out.print("Ingrese el número de la película a devolver: ");
 				int número = Integer.parseInt(lector.readLine());
-				clientes1.eliminarPrestamo(user, user.getPeliculaPrestada().get(número - 1));
+				Pelicula peliUser = user.getPeliculaPrestada().get(número - 1);
+				Pelicula peli = almacen1.buscarPorTitulo(peliUser.getTitulo());
+				if(peli == null) {
+					peliUser.setStock(1);
+					almacen1.agregarPelícula(peliUser);
+				}
+				else {
+					peli.devolver();
+				}
+				clientes1.eliminarPrestamo(user, peliUser.getTitulo());
 				System.out.println();
 				System.out.println("Película devuelta con éxito");
+				System.out.println();
 			}
-			else {
-				System.out.println("El usuario no tiene películas prestadas");
-			}
+			else System.out.println("El usuario no tiene películas prestadas");
 		}
+		else System.out.println("No existe usuario con ese Rut");
 	}
 	
+	//-----------------------3. Buscar un usuario----------------------|
 	public void searchUser() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		System.out.println();
@@ -405,16 +408,18 @@ public class Menu {
 			System.out.println();
 			user.datos();
 		}
+		else System.out.println("No existe usuario con ese Rut");
 	}
 	
+	//--------------------------4. Listar usuarios---------------------|
 	public void listUser() {
 		if(clientes1.getCliente().size() != 0) {
 			System.out.println("Lista de usuarios registrados:");
 			System.out.println();
-			for(short i = 0; i < clientes1.getCliente().size(); i++) {
-				System.out.print((i + 1) + ".");
-				clientes1.getCliente().get(i).datos();
-				System.out.println();
+			int i = 1;
+			for(String key: clientes1.getCliente().keySet()) {
+				System.out.println("Usuario " + i);
+				clientes1.getCliente().get(key).datos();
 			}
 		}
 		else {

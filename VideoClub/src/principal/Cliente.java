@@ -1,20 +1,20 @@
 package principal;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Cliente {
-	private ArrayList<Usuario> cliente;
+	private HashMap<String, Usuario> cliente;
 	
 	public Cliente() {
-		cliente = new ArrayList<Usuario>();
+		cliente = new HashMap<String, Usuario>();
 	}
 	
-	public ArrayList<Usuario> getCliente(){
+	public HashMap<String, Usuario> getCliente(){
 		return cliente;
 	}
 	
 	public void eliminarPrestamo(Usuario user, String prestamo) {
 		for(int i = 0; i < user.getPeliculaPrestada().size(); i++){
-			if(user.getPeliculaPrestada().get(i).equalsIgnoreCase(prestamo)) {
+			if(user.getPeliculaPrestada().get(i).getTitulo().equalsIgnoreCase(prestamo)) {
 				user.getPeliculaPrestada().remove(i);
 				return;
 			}
@@ -23,26 +23,18 @@ public class Cliente {
 		System.out.println();
 	}
 	
-	public void agregarPrestamo(String rut, String prestamo) {
-		for(int i = 0; i < cliente.size(); i++){
-			if(cliente.get(i).getRut().equalsIgnoreCase(rut)) {
-				cliente.get(i).getPeliculaPrestada().add(prestamo);
-				return;
-			}
-		}
+	public void agregarPrestamo(String rut, Pelicula peli) {
+		cliente.get(rut).getPeliculaPrestada().add(peli);
 	}
 	
-	public void agregarPrestamo(Usuario user, String prestamo) {
-		cliente.add(user);
-		cliente.getLast().getPeliculaPrestada().add(prestamo);
+	public void agregarPrestamo(Usuario user, Pelicula peli) {
+		String rut = user.getRut();
+		cliente.put(rut, user);
+		cliente.get(rut).getPeliculaPrestada().add(peli);
 	}
 	
 	public Usuario buscarUsuario(String rut) {
-		for(int i = 0; i < cliente.size(); i++) {
-			if(cliente.get(i).getRut().equalsIgnoreCase(rut))
-				return cliente.get(i);
-		}
-		return null;
+		return cliente.get(rut);
 	}
 }
 
