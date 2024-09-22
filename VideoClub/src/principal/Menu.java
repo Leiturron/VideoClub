@@ -87,24 +87,31 @@ public class Menu {
 	public void gestionUsuarios() throws IOException {
 		while(true) {
 			System.out.println("Gestion de usuarios");
-			System.out.println("1. Agregar un préstamo");
-			System.out.println("2. Eliminar un préstamo");
-			System.out.println("3. Buscar usuario");
-			System.out.println("4. Listar usuarios");
-			System.out.println("5. Volver");
+			System.out.println("1. Registrar nuevo usuario");
+			System.out.println("2. Agregar un préstamo");
+			System.out.println("3. Eliminar un préstamo");
+			System.out.println("4. Buscar usuario");
+			System.out.println("5. Eliminar usuario");
+			System.out.println("6. Listar usuarios");
+			System.out.println("7. Volver");
 			opcion = Integer.parseInt(lector.readLine());
-			if(opcion == 5) break;
+			if(opcion == 7) break;
 			switch(opcion) {
 				case 1:
-					addPrestamo();
+					addUser();
 					break;
 				case 2:
-					deletePrestamo();
-					break;
+				deleteUser();
 				case 3:
-					searchUser();
+					addPrestamo();
 					break;
 				case 4:
+					deletePrestamo();
+					break;
+				case 5:
+					searchUser();
+					break;
+				case 6:
 					listUser();
 					break;
 				default:
@@ -312,8 +319,32 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-----------------Opciones del menu gestion usuario---------------|
 	//-----------------------------------------------------------------|
+	
+	//-----------------------1. Registrar un usuario----------------------|
+	public void addUser() throws IOException{
+		System.out.println("Registrando un nuevo usuario");
+		System.out.print("Ingrese el nombre del usuario: ");
+		String nombre = lector.readLine();
+		System.out.println("Ingrese el rut del usuario: ");
+		String rut = lector.readLine();
+		clientes1.agregarUsuario(nombre, rut);
+	}
 
-	//-----------------------1. Agregar un préstamo--------------------|
+	//-----------------------2. Eliminar un usuario----------------------|
+		public void deleteUser() throws IOException {
+			System.out.print("Ingrese el rut del usuario: ");
+			System.out.println();
+			String rut = lector.readLine();
+			Usuario user = clientes1.buscarUsuario(rut);
+			if(user != null) {
+				clientes1.eliminarUsuario(rut);
+				System.out.println("Usuario eliminado");
+			}
+			else System.out.println("No existe un usuario con ese rut"); 
+		}
+		
+	
+	//-----------------------3. Agregar un préstamo--------------------|
 	public void addPrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
@@ -361,7 +392,7 @@ public class Menu {
 		}	
 	}
 	
-	//-----------------------2. Eliminar un préstamo-------------------|
+	//-----------------------4. Eliminar un préstamo-------------------|
 	public void deletePrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
@@ -397,7 +428,7 @@ public class Menu {
 		else System.out.println("No existe usuario con ese Rut");
 	}
 	
-	//-----------------------3. Buscar un usuario----------------------|
+	//-----------------------5. Buscar un usuario----------------------|
 	public void searchUser() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		System.out.println();
@@ -411,7 +442,7 @@ public class Menu {
 		else System.out.println("No existe usuario con ese Rut");
 	}
 	
-	//--------------------------4. Listar usuarios---------------------|
+	//--------------------------6. Listar usuarios---------------------|
 	public void listUser() {
 		if(clientes1.getCliente().size() != 0) {
 			System.out.println("Lista de usuarios registrados:");
