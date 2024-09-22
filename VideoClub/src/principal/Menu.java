@@ -328,6 +328,7 @@ public class Menu {
 		System.out.println("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
 		clientes1.agregarUsuario(nombre, rut);
+		System.out.println("Usuario registrado");
 	}
 
 	//-----------------------2. Eliminar un usuario----------------------|
