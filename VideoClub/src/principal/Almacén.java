@@ -16,21 +16,17 @@ public class Almacén {
 		mapaDirectores = new HashMap<String, ArrayList<Pelicula>>();
 		mapaDécadas = new HashMap<Integer , ArrayList<Pelicula>>();
 	}
-
-	public ArrayList<Pelicula> getPelículas() {
-		return películas;
+	
+	public int getSizePeliculas() {
+		return películas.size();
 	}
-
-	public HashMap<String, ArrayList<Pelicula>> getMapaGéneros() {
-		return mapaGéneros;
+	
+	public Pelicula getPelicula(int i) {
+		return películas.get(i);
 	}
-
-	public HashMap<String, ArrayList<Pelicula>> getMapaDirectores() {
-		return mapaDirectores;
-	}
-
-	public HashMap<Integer, ArrayList<Pelicula>> getMapaDécadas() {
-		return mapaDécadas;
+	
+	public void agregarPelicula(Pelicula pelicula) {
+		películas.add(pelicula);
 	}
 	
 	public void Datos() throws IOException {

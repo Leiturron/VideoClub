@@ -130,9 +130,9 @@ public class Menu {
 	//------------------------Listar peliculas-------------------------|
 	public void listarPeli() throws IOException{
 		System.out.println("Lista de las películas");
-		for(int i= 0; i < almacen1.getPelículas().size(); i++) {
+		for(int i= 0; i < almacen1.getSizePeliculas(); i++) {
 			System.out.println();
-			datosPelicula(almacen1.getPelículas().get(i));
+			datosPelicula(almacen1.getPelicula(i));
 		}
 	}
 	
@@ -142,7 +142,7 @@ public class Menu {
 	
 	//---------------------- 1. Agregar película-----------------------|
 	public void addNewPeli() throws IOException {
-		int codigo = almacen1.getPelículas().size() + 1;
+		int codigo = almacen1.getSizePeliculas() + 1;
 		System.out.print("Ingrese el título de la película: ");
 		String titulo = lector.readLine();
 		System.out.print("Ingrese el director de la película: ");
