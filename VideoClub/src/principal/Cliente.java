@@ -12,6 +12,15 @@ public class Cliente {
 		return cliente;
 	}
 	
+	public void agregarUsuario(String nombre, String rut) {
+		Usuario usuario = new Usuario(nombre, rut);
+		cliente.put(rut, usuario);
+	}
+	
+	public void eliminarUsuario(String rut) {
+			cliente.remove(rut);
+	}
+	
 	public void eliminarPrestamo(Usuario user, String prestamo) {
 		for(int i = 0; i < user.getPeliculaPrestada().size(); i++){
 			if(user.getPeliculaPrestada().get(i).getTitulo().equalsIgnoreCase(prestamo)) {
