@@ -88,10 +88,10 @@ public class Menu {
 		while(true) {
 			System.out.println("Gestion de usuarios");
 			System.out.println("1. Registrar nuevo usuario");
-			System.out.println("2. Agregar un préstamo");
-			System.out.println("3. Eliminar un préstamo");
-			System.out.println("4. Buscar usuario");
-			System.out.println("5. Eliminar usuario");
+			System.out.println("2. Eliminar usuario");
+			System.out.println("3. Agregar un préstamo");
+			System.out.println("4. Eliminar un préstamo");
+			System.out.println("5. Buscar usuario");
 			System.out.println("6. Listar usuarios");
 			System.out.println("7. Volver");
 			opcion = Integer.parseInt(lector.readLine());
@@ -101,7 +101,7 @@ public class Menu {
 					addUser();
 					break;
 				case 2:
-				deleteUser();
+					deleteUser();
 				case 3:
 					addPrestamo();
 					break;
