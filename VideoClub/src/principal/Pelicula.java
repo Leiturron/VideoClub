@@ -66,4 +66,5 @@ public class Pelicula {
 	public void devolver() {
 		stock++;
 	}
+
 }

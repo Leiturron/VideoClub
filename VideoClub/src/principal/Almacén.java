@@ -6,15 +6,15 @@ import java.util.HashMap;
 
 public class Almacén {
 	private ArrayList<Pelicula> películas;
-	private HashMap<String, ArrayList<Pelicula>> mapaGéneros;
-	private HashMap<String, ArrayList<Pelicula>> mapaDirectores;
-	private HashMap<Integer, ArrayList<Pelicula>> mapaDécadas;
+	private HashMap<String, PeliGenero> mapaGéneros;
+	private HashMap<String, PeliDirector> mapaDirectores;
+	private HashMap<Integer, PeliDecada> mapaDécadas;
 	
 	public Almacén(){
 		películas = new ArrayList<Pelicula>();
-		mapaGéneros = new HashMap<String, ArrayList<Pelicula>>();
-		mapaDirectores = new HashMap<String, ArrayList<Pelicula>>();
-		mapaDécadas = new HashMap<Integer , ArrayList<Pelicula>>();
+		mapaGéneros = new HashMap<String, PeliGenero>();
+		mapaDirectores = new HashMap<String, PeliDirector>();
+		mapaDécadas = new HashMap<Integer , PeliDecada>();
 	}
 	
 	public int getSizePeliculas() {
@@ -50,84 +50,82 @@ public class Almacén {
 	public void agregarPelícula(Pelicula película) {
 		películas.add(película);
 		
-		if(mapaGéneros.get(película.getGenero().toUpperCase()) == null) {
-			ArrayList<Pelicula> pelisGénero = new ArrayList<Pelicula>();
-			mapaGéneros.put(película.getGenero().toUpperCase(), pelisGénero);
+		String genero = película.getGenero().toUpperCase();
+		if(mapaGéneros.get(genero) == null) {
+			PeliGenero peliGenre = new PeliGenero();
+			peliGenre.setName(genero);
+			mapaGéneros.put(genero, peliGenre);
 		}
-		mapaGéneros.get(película.getGenero().toUpperCase()).add(película);
 		
-		if(mapaDirectores.get(película.getDirector().toUpperCase()) == null) {
-			ArrayList<Pelicula> pelisDirector = new ArrayList<Pelicula>();
-			mapaDirectores.put(película.getDirector().toUpperCase(), pelisDirector);
+		String director = película.getDirector().toUpperCase();
+		if(mapaDirectores.get(director) == null) {
+			PeliDirector peliDir = new PeliDirector();
+			peliDir.setName(director);
+			mapaDirectores.put(director, peliDir);
 		}
-		mapaDirectores.get(película.getDirector().toUpperCase()).add(película);
 		
-		if(mapaDécadas.get(película.getDecada(película.getAño())) == null) {
-			ArrayList<Pelicula> pelisDécada = new ArrayList<Pelicula>();
-			mapaDécadas.put(película.getDecada(película.getAño()), pelisDécada);
+		int decada = película.getDecada(película.getAño());
+		if(mapaDécadas.get(decada) == null) {
+			PeliDecada peliDec = new PeliDecada();
+			peliDec.setDecada(decada);
+			mapaDécadas.put(decada, peliDec);
 		}
-		mapaDécadas.get(película.getDecada(película.getAño())).add(película);
+		
+		mapaGéneros.get(genero).agregar(película);
+		mapaDirectores.get(director).agregar(película);
+		mapaDécadas.get(decada).agregar(película);
 	}
-	
-	public void eliminarPelícula(String titulo) {
-		Pelicula película = null;
+
+	public boolean eliminarPelícula(String titulo) {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
-				película = películas.remove(i);
-				ArrayList<Pelicula> arr = mapaGéneros.get(película.getGenero().toUpperCase());
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						arr.remove(j);
-					}
-				}
-				arr = mapaDirectores.get(película.getDirector().toUpperCase());
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						arr.remove(j);
-					}
-				}
-				arr = mapaDécadas.get(película.getDecada(película.getAño()));
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getTitulo().equalsIgnoreCase(titulo)) {
-						arr.remove(j);
-					}
-				}
-				return;
+				Pelicula película = películas.remove(i);
+				
+				
+				String genero = película.getGenero().toUpperCase();
+				PeliGenero tempGenre = mapaGéneros.get(genero);
+				tempGenre.eliminarPorTitulo(titulo);
+				
+				
+				String director = película.getDirector().toUpperCase();
+				PeliDirector tempDir = mapaDirectores.get(director);
+				tempDir.eliminarPorTitulo(titulo);
+				
+				int anno = película.getAño();
+				int decada = película.getDecada(anno);
+				PeliDecada tempDec = mapaDécadas.get(decada);
+				tempDec.eliminarPorTitulo(titulo);
+				
+				return true;
 			}
 		}
-		System.out.println("Película " + titulo + " no encontrada");
-		System.out.println();
+		return false;
 	}
 	
-	public void eliminarPelícula(int código) {
-		Pelicula película = null;
+	public boolean eliminarPelícula(int codigo) {
 		for(short i = 0; i < películas.size(); i++) {
-			if(películas.get(i).getCodigo() == código) {
-				película = películas.remove(i);
-				ArrayList<Pelicula> arr = mapaGéneros.get(película.getGenero().toUpperCase());
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getCodigo() == código) {
-						arr.remove(j);
-					}
-				}
-				arr = mapaDirectores.get(película.getDirector().toUpperCase());
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getCodigo() == código) {
-						arr.remove(j);
-					}
-				}
-				arr = mapaDécadas.get(película.getDecada(película.getAño()));
-				for(short j = 0; j < arr.size(); j++) {
-					if(arr.get(j).getCodigo() == código) {
-						arr.remove(j);
-					}
-				}
-				return;
+			if(películas.get(i).getCodigo() == codigo) {
+				Pelicula película = películas.remove(i);
+				
+				
+				String genero = película.getGenero().toUpperCase();
+				PeliGenero tempGenre = mapaGéneros.get(genero);
+				tempGenre.eliminarPorCodigo(codigo);
+				
+				
+				String director = película.getDirector().toUpperCase();
+				PeliDirector tempDir = mapaDirectores.get(director);
+				tempDir.eliminarPorCodigo(codigo);
+				
+				int anno = película.getAño();
+				int decada = película.getDecada(anno);
+				PeliDecada tempDec = mapaDécadas.get(decada);
+				tempDec.eliminarPorCodigo(codigo);
+				
+				return true;
 			}
-		
 		}
-		System.out.println("Película con código " + código + " no encontrada");
-		System.out.println();
+		return false;
 	}
 	
 	public Pelicula buscarPorCodigo(int codigo) {
@@ -141,16 +139,19 @@ public class Almacén {
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) return películas.get(i);
 		return null;
 	}
-	
-	public ArrayList<Pelicula> buscarPorDirector(String director) {
-		return mapaDirectores.get(director);
+
+	public PeliGenero buscarPorGenero(String genero) {
+		String genre = genero.toUpperCase();
+		return mapaGéneros.get(genre);
 	}
 	
-	public ArrayList<Pelicula> buscarPorGénero(String género) {
-		return mapaGéneros.get(género);
+	public PeliDirector buscarPorDirector(String director) {
+		String direc = director.toUpperCase();
+		return mapaDirectores.get(direc);
 	}
 	
-	public ArrayList<Pelicula> buscarPorDécada(int década) {
-		return mapaDécadas.get(década);
+	public PeliDecada buscarPorDecada(int decada) {
+		return mapaDécadas.get(decada);
 	}
+	
 }

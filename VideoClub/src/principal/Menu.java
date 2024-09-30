@@ -3,7 +3,6 @@ package principal;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Menu {
 	private int opcion;
@@ -87,31 +86,24 @@ public class Menu {
 	public void gestionUsuarios() throws IOException {
 		while(true) {
 			System.out.println("Gestion de usuarios");
-			System.out.println("1. Registrar nuevo usuario");
-			System.out.println("2. Eliminar usuario");
-			System.out.println("3. Agregar un préstamo");
-			System.out.println("4. Eliminar un préstamo");
-			System.out.println("5. Buscar usuario");
-			System.out.println("6. Listar usuarios");
-			System.out.println("7. Volver");
+			System.out.println("1. Agregar un préstamo");
+			System.out.println("2. Eliminar un préstamo");
+			System.out.println("3. Buscar usuario");
+			System.out.println("4. Listar usuarios");
+			System.out.println("5. Volver");
 			opcion = Integer.parseInt(lector.readLine());
-			if(opcion == 7) break;
+			if(opcion == 5) break;
 			switch(opcion) {
 				case 1:
-					addUser();
-					break;
-				case 2:
-					deleteUser();
-				case 3:
 					addPrestamo();
 					break;
-				case 4:
+				case 2:
 					deletePrestamo();
 					break;
-				case 5:
+				case 3:
 					searchUser();
 					break;
-				case 6:
+				case 4:
 					listUser();
 					break;
 				default:
@@ -124,8 +116,8 @@ public class Menu {
 	//---------------------------Herramientas--------------------------|
 	//-----------------------------------------------------------------|
 	
-	//---------------------Imprimir datos de la pelicula---------------|
-	public void datosPelicula(Pelicula peli) {
+	//----------------Imprimir los datos de la pelicula----------------|
+	public static void datosPelicula(Pelicula peli) {
 		System.out.println("Título: " + peli.getTitulo());
 		System.out.println("Código: " + peli.getCodigo());
 		System.out.println("Género: " + peli.getGenero());
@@ -237,10 +229,10 @@ public class Menu {
 					searchDirect();
 					break;
 				case 4:
-					searchGener();
+					//searchGener();
 					break;
 				case 5:
-					searchDecada();
+					//searchDecada();
 					break;
 				default:
 					System.out.println("Opción Invalido");
@@ -274,14 +266,12 @@ public class Menu {
 	public void searchDirect()throws IOException {
 		System.out.print("Ingrese el nombre del director: ");
 		String nomb = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorDirector(nomb.toUpperCase());
-		if(array == null) System.out.println("No existe director llamado a " + nomb);
+		
+		PeliDirector objDirec = almacen1.buscarPorDirector(nomb);
+		if(objDirec == null) System.out.println("No existe director llamado a " + nomb);
 		else {
 			System.out.println("Películas de " + nomb);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
+			objDirec.listarPeliculas();
 		}
 	}
 	
@@ -289,14 +279,12 @@ public class Menu {
 	public void searchGener() throws IOException {
 		System.out.print("Ingrese el género de la película: ");
 		String genero = lector.readLine();
-		ArrayList<Pelicula> array = almacen1.buscarPorGénero(genero.toUpperCase());
-		if(array == null) System.out.println("No existe película de género " + genero);
+		
+		PeliGenero objGenre = almacen1.buscarPorGenero(genero);
+		if(objGenre == null) System.out.println("No existe película de género " + genero);
 		else {
 			System.out.println("Películas de " + genero);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
+			objGenre.listarPeliculas();
 		}
 	}
 	
@@ -305,47 +293,19 @@ public class Menu {
 		System.out.print("Ingrese el año (El sistema lo transforma a década): ");
 		int anno = Integer.parseInt(lector.readLine());
 		int decada = anno - anno % 10;
-		ArrayList<Pelicula> array = almacen1.buscarPorDécada(decada);
-		if(array == null) System.out.println("No existe película de década " + decada);
+		PeliDecada objDec = almacen1.buscarPorDecada(decada);
+		if(objDec == null) System.out.println("No existe película de década " + decada);
 		else {
 			System.out.println("Películas de década " + decada);
-			for(int i = 0; i < array.size(); i++) {
-				System.out.println();
-				datosPelicula(array.get(i));
-			}
+			objDec.listarPeliculas();
 		}
 	}
 	
 	//-----------------------------------------------------------------|
 	//-----------------Opciones del menu gestion usuario---------------|
 	//-----------------------------------------------------------------|
-	
-	//-----------------------1. Registrar un usuario----------------------|
-	public void addUser() throws IOException{
-		System.out.println("Registrando un nuevo usuario");
-		System.out.print("Ingrese el nombre del usuario: ");
-		String nombre = lector.readLine();
-		System.out.println("Ingrese el rut del usuario: ");
-		String rut = lector.readLine();
-		clientes1.agregarUsuario(nombre, rut);
-		System.out.println("Usuario registrado");
-	}
 
-	//-----------------------2. Eliminar un usuario----------------------|
-		public void deleteUser() throws IOException {
-			System.out.print("Ingrese el rut del usuario: ");
-			System.out.println();
-			String rut = lector.readLine();
-			Usuario user = clientes1.buscarUsuario(rut);
-			if(user != null) {
-				clientes1.eliminarUsuario(rut);
-				System.out.println("Usuario eliminado");
-			}
-			else System.out.println("No existe un usuario con ese rut"); 
-		}
-		
-	
-	//-----------------------3. Agregar un préstamo--------------------|
+	//-----------------------1. Agregar un préstamo--------------------|
 	public void addPrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
@@ -393,7 +353,7 @@ public class Menu {
 		}	
 	}
 	
-	//-----------------------4. Eliminar un préstamo-------------------|
+	//-----------------------2. Eliminar un préstamo-------------------|
 	public void deletePrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
@@ -429,7 +389,7 @@ public class Menu {
 		else System.out.println("No existe usuario con ese Rut");
 	}
 	
-	//-----------------------5. Buscar un usuario----------------------|
+	//-----------------------3. Buscar un usuario----------------------|
 	public void searchUser() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		System.out.println();
@@ -443,7 +403,7 @@ public class Menu {
 		else System.out.println("No existe usuario con ese Rut");
 	}
 	
-	//--------------------------6. Listar usuarios---------------------|
+	//--------------------------4. Listar usuarios---------------------|
 	public void listUser() {
 		if(clientes1.getCliente().size() != 0) {
 			System.out.println("Lista de usuarios registrados:");
