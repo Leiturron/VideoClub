@@ -1,6 +1,9 @@
 package principal;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
@@ -36,7 +39,7 @@ public class Menu {
 					break;
 				case 3:
 					System.out.println("Saliendo del sistema");
-					System.exit(0);
+					return;
 				default:
 					System.out.println("Opción invalido");
 					break;
@@ -141,7 +144,7 @@ public class Menu {
 	
 	//---------------------- 1. Agregar película-----------------------|
 	public void addNewPeli() throws IOException {
-		int codigo = almacen1.getSizePeliculas() + 1;
+		int codigo = almacen1.getOrden();
 		System.out.print("Ingrese el título de la película: ");
 		String titulo = lector.readLine();
 		System.out.print("Ingrese el director de la película: ");
@@ -418,6 +421,21 @@ public class Menu {
 		else {
 			System.out.println("No hay usuarios registrados para mostrar");
 			System.out.println();
+		}
+	}
+	
+	public void actualizarFile() throws IOException{
+		File archivo = new File("src/recursos/infoPeliculas.csv");
+		try(BufferedWriter reader = new BufferedWriter(new FileWriter(archivo))){
+			reader.append("código,título,director,género,año,stock");
+			reader.newLine();
+			for(int i = 0; i < almacen1.getSizePeliculas(); i++) {
+				Pelicula peli = almacen1.getPelicula(i);
+				reader.append(peli.getCodigo() + "," + peli.getTitulo() + "," + peli.getDirector() + ","
+						+ peli.getGenero() + "," + peli.getAño() + "," + peli.getStock());
+				reader.newLine();
+			}
+			reader.close();
 		}
 	}
 }

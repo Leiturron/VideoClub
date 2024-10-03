@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Almacén {
+	private int ordenCodigo;
 	private ArrayList<Pelicula> películas;
 	private HashMap<String, PeliGenero> mapaGéneros;
 	private HashMap<String, PeliDirector> mapaDirectores;
@@ -15,6 +16,7 @@ public class Almacén {
 		mapaGéneros = new HashMap<String, PeliGenero>();
 		mapaDirectores = new HashMap<String, PeliDirector>();
 		mapaDécadas = new HashMap<Integer , PeliDecada>();
+		this.ordenCodigo = 1;
 	}
 	
 	public int getSizePeliculas() {
@@ -74,6 +76,9 @@ public class Almacén {
 		mapaGéneros.get(genero).agregar(película);
 		mapaDirectores.get(director).agregar(película);
 		mapaDécadas.get(decada).agregar(película);
+		
+		this.ordenCodigo++;
+		
 	}
 
 	public boolean eliminarPelícula(String titulo) {
@@ -153,5 +158,15 @@ public class Almacén {
 	public PeliDecada buscarPorDecada(int decada) {
 		return mapaDécadas.get(decada);
 	}
+	
+	//getter setter
+	public int getOrden() {
+		return ordenCodigo;
+	}
+
+	public void setOrden(int ordenCodigo) {
+		this.ordenCodigo = ordenCodigo;
+	}
+	
 	
 }
