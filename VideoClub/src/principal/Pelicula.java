@@ -7,6 +7,7 @@ public class Pelicula {
 	private String genero;
 	private int año;
 	private int stock;
+	private String descripcion;
 	
 	public Pelicula(int codigo, String titulo, String director, String genero, int año, int stock) {
 		this.codigo = codigo;
@@ -55,6 +56,13 @@ public class Pelicula {
 	public void setStock(int stock ) {
 		this.stock = stock;
 	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	public int getDecada(int año) {
 		return año - (año % 10);
 	}

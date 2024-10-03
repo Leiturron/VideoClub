@@ -133,6 +133,22 @@ public class Almacén {
 		return false;
 	}
 	
+	public boolean editarPelicula(String titulo, String descripcion) {
+		for(short i = 0; i < películas.size(); i++) {
+			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+				Pelicula pelicula = películas.get(i);
+				pelicula.setDescripcion(descripcion);
+				
+				mapaGéneros.get(pelicula.getGenero()).editarPelicula(titulo, descripcion);
+				mapaDirectores.get(pelicula.getDirector()).editarPelicula(titulo, descripcion);
+				mapaDécadas.get(pelicula.getDecada(pelicula.getAño())).editarPelicula(titulo, descripcion);
+				
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Pelicula buscarPorCodigo(int codigo) {
 		for(short i = 0; i < películas.size(); i++)
 			if(películas.get(i).getCodigo() == codigo) return películas.get(i);
