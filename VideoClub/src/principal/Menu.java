@@ -194,19 +194,38 @@ public class Menu {
 	}
 	
 	public void eliminarCode() throws IOException {
-		System.out.print("Ingrese el código de la película (0 para cancelar): ");
-		int code = Integer.parseInt(lector.readLine());
-		if(code == 0) return;
-		almacen1.eliminarPelícula(code);
-		System.out.println("Se eliminó correctamente");
+		try {
+			System.out.print("Ingrese el código de la película (0 para cancelar): ");
+			int code = Integer.parseInt(lector.readLine());
+			if(code == 0) return;
+			boolean eliminado = almacen1.eliminarPelícula(code);
+			if(eliminado) {
+				System.out.println("Se eliminó correctamente");
+			}
+		}
+		catch (NumInvalidException e) {
+			System.out.println("No se encontro el codigo");
+		}
 	}
 	
 	public void eliminarTitle() throws IOException {
-		System.out.print("Ingrese el título de la película (0 para cancelar): ");
-		String title = lector.readLine();
-		if(title.equals("0")) return;
-		almacen1.eliminarPelícula(title);
-		System.out.println("Se eliminó correctamente");
+		try {
+			System.out.print("Ingrese el título de la película (0 para cancelar): ");
+			String title = lector.readLine();
+			if(title.equals("0")) return;
+			boolean eliminado = almacen1.eliminarPelícula(title);
+			if(eliminado) {
+				System.out.println("Se eliminó correctamente");
+			} else {
+				System.out.println("El titulo no fue encontrado");
+			}
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error.");
+		}
+			
+		
 	}
 	
 	//------------------------ 3. Buscar película----------------------|

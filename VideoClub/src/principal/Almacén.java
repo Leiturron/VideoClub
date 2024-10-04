@@ -107,7 +107,7 @@ public class Almacén {
 		return false;
 	}
 	
-	public boolean eliminarPelícula(int codigo) {
+	public boolean eliminarPelícula(int codigo) throws NumInvalidException {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getCodigo() == codigo) {
 				Pelicula película = películas.remove(i);
@@ -130,7 +130,7 @@ public class Almacén {
 				return true;
 			}
 		}
-		return false;
+		throw new NumInvalidException();
 	}
 	
 	public boolean editarPelicula(String titulo, String descripcion) {
