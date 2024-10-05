@@ -216,15 +216,11 @@ public class Menu {
 			boolean eliminado = almacen1.eliminarPelícula(title);
 			if(eliminado) {
 				System.out.println("Se eliminó correctamente");
-			} else {
-				System.out.println("El titulo no fue encontrado");
-			}
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error.");
+			} 
 		}
-			
+		catch (Exception e) {
+			System.out.println("No se encontro el titulo");
+		}
 		
 	}
 	
