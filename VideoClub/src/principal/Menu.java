@@ -12,11 +12,13 @@ public class Menu {
 	private BufferedReader lector;
 	private Almacén almacen1;
 	private Cliente clientes1;
+	private Ventas ventas1;
 	
 	public Menu() throws IOException {
 		almacen1 = new Almacén();
 		almacen1.Datos();
 		clientes1 = new Cliente();
+		ventas1 = new Ventas();
 		lector = new BufferedReader(new InputStreamReader(System.in));
 	}
 	//-----------------------------------------------------------------|
@@ -28,20 +30,24 @@ public class Menu {
 			System.out.println("     Sistema de gestión");
 			System.out.println("1. Gestión de las películas");
 			System.out.println("2. Gestión de los usuarios");
-			System.out.println("3. Salir del sistema");
+			System.out.println("3. Gestión de ventas");
+			System.out.println("4. Salir del sistema");
 			opcion = Integer.parseInt(lector.readLine());
 			switch(opcion) {
-				case 1: //Menu de gestionar películas
+				case 1: //Menu de gestion películas
 					gestionPeliculas();
 					break;
-				case 2: //Menu de gestionar usuarios
+				case 2: //Menu de gestion usuarios
 					gestionUsuarios();
 					break;
-				case 3:
+				case 3: //Menu de gestion ventas
+					gestionVentas();
+					break;
+				case 4:
 					System.out.println("Saliendo del sistema");
 					return;
 				default:
-					System.out.println("Opción invalido");
+					System.out.println("Opción invalida");
 					break;
 			}
 			System.out.println();
@@ -112,6 +118,30 @@ public class Menu {
 				default:
 					System.out.println("Opcion Invalida");
 			}
+		}
+	}
+	
+	//-----------------------------------------------------------------|
+	//--------------------Menu gestion de las ventas-------------------|
+	//-----------------------------------------------------------------|
+	public void gestionVentas() throws IOException {
+		while(true) {
+			System.out.println("Gestion de ventas");
+			System.out.println("1. Mostrar ventas");
+			System.out.println("2. Cerrar ventas");
+			System.out.println("3. Volver");
+			opcion = Integer.parseInt(lector.readLine());
+			if(opcion == 3) break;
+			switch(opcion) {
+				case 1:
+					mostrarVentas();
+					break;
+				case 2:
+					cerrarVentas();
+					break;
+				default:
+					System.out.println("Opción Invalida");
+			}	
 		}
 	}
 	
@@ -247,13 +277,13 @@ public class Menu {
 					searchDirect();
 					break;
 				case 4:
-					//searchGener();
+					searchGener();
 					break;
 				case 5:
-					//searchDecada();
+					searchDecada();
 					break;
 				default:
-					System.out.println("Opción Invalido");
+					System.out.println("Opción Invalida");
 					break;
 			}
 			System.out.println();
@@ -286,7 +316,7 @@ public class Menu {
 		String nomb = lector.readLine();
 		
 		PeliDirector objDirec = almacen1.buscarPorDirector(nomb);
-		if(objDirec == null) System.out.println("No existe director llamado a " + nomb);
+		if(objDirec == null) System.out.println("No existe director llamado" + nomb);
 		else {
 			System.out.println("Películas de " + nomb);
 			objDirec.listarPeliculas();
@@ -330,6 +360,13 @@ public class Menu {
 		Usuario user = clientes1.buscarUsuario(rut);
 		if(user != null) {  //Usuario existente
 			System.out.println("Se encontró el usuario: " + user.getNombre());
+			String opcion;
+			System.out.println("¿Desea ver la lista de películas disponibles? (y/n): ");
+			opcion = lector.readLine();
+			if(opcion.equalsIgnoreCase("y")) {
+				listarPeli();
+				System.out.println();
+			}
 			System.out.println("Ingrese el título de la película a prestar: ");
 			while(true) {
 				String titulo = lector.readLine();
@@ -338,20 +375,29 @@ public class Menu {
 					if(peli.getStock() != 0) {
 						peli.prestar();
 						clientes1.agregarPrestamo(rut, peli);
+						ventas1.hacerVenta();
 					}
 					else
 						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
 					break;
 				}
-				else System.out.print("No encontró esta película, ingrese denuevo: ");
+				else System.out.print("No encontró esa película, ingrese nuevamente: ");
 			}
 		}
-		else            //Usuario no esxistente
+		else            //Usuario no existente
 		{
 			System.out.println("Registrando un nuevo usuario");
 			System.out.print("Ingrese el nombre del usuario: ");
 			String nombre = lector.readLine();
 			Usuario newUser = new Usuario(nombre, rut);
+			String opcion;
+			System.out.println("¿Desea ver la lista de películas disponibles? (y/n): ");
+			opcion = lector.readLine();
+			if(opcion.equalsIgnoreCase("y")) {
+				listarPeli();
+				System.out.println();
+			}
+	
 			System.out.println("Ingrese el título de la película a prestar: ");
 			while(true) {
 				String titulo = lector.readLine();
@@ -360,13 +406,14 @@ public class Menu {
 					if(peli.getStock() != 0) {
 						peli.prestar();
 						clientes1.agregarPrestamo(newUser, peli);
+						ventas1.hacerVenta();
 					}
 					else
 						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
 					break;
 					
 				}
-				else System.out.println("No encontró esta película, ingrese denuevo: ");
+				else System.out.println("No se encontró esa película, ingrese nuevamente: ");
 			}
 		}	
 	}
@@ -404,7 +451,7 @@ public class Menu {
 			}
 			else System.out.println("El usuario no tiene películas prestadas");
 		}
-		else System.out.println("No existe usuario con ese Rut");
+		else System.out.println("No existe usuario con ese rut");
 	}
 	
 	//-----------------------3. Buscar un usuario----------------------|
@@ -418,7 +465,7 @@ public class Menu {
 			System.out.println();
 			user.datos();
 		}
-		else System.out.println("No existe usuario con ese Rut");
+		else System.out.println("No existe usuario con ese rut");
 	}
 	
 	//--------------------------4. Listar usuarios---------------------|
@@ -437,6 +484,24 @@ public class Menu {
 			System.out.println("No hay usuarios registrados para mostrar");
 			System.out.println();
 		}
+	}
+	
+	//-----------------------------------------------------------------|
+		//-----------------Opciones del menu gestion ventas---------------|
+		//-----------------------------------------------------------------|
+
+		//-----------------------1. Mostrar ventas--------------------|
+	public void mostrarVentas() {
+		System.out.println();
+		System.out.println("Ventas: " + ventas1.getVentas());
+		System.out.println();
+	}
+	
+	//-----------------------2. Cerrar ventas--------------------|
+	public void cerrarVentas() {
+		System.out.println();
+		System.out.println("Total ventas: " + ventas1.cerrarVentas());
+		System.out.println();
 	}
 	
 	public void actualizarFile() throws IOException{
