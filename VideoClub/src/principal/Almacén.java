@@ -133,7 +133,7 @@ public class Almacén {
 		throw new NumInvalidException();
 	}
 	
-	public boolean editarPelicula(String titulo, String descripcion) {
+	public boolean editarPeli(String titulo, String descripcion) {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
 				Pelicula pelicula = películas.get(i);

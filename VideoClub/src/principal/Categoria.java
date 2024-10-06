@@ -12,15 +12,13 @@ public class Categoria {
 		this.lista.add(peli);
 	}
 	
-	public boolean editarPelicula(String titulo, String descripcion) {
+	public void editarPelicula(String titulo, String descripcion) {
 		for(int i = 0; i < this.lista.size(); i++) {
 			Pelicula peli = this.lista.get(i);
 			if(peli.getTitulo().equalsIgnoreCase(titulo)) {
 				this.lista.get(i).setDescripcion(descripcion);
-				return true;
 			}
 		}
-		return false;
 	}
 	
 	public boolean eliminarPorTitulo(String title) {

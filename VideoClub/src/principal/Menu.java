@@ -63,10 +63,11 @@ public class Menu {
 			System.out.println("1. Agregar película");
 			System.out.println("2. Eliminar película");
 			System.out.println("3. Buscar película");
-			System.out.println("4. Listar Películas");
-			System.out.println("5. Volver");
+			System.out.println("4. Editar película");
+			System.out.println("5. Listar Películas");
+			System.out.println("6. Volver");
 			opcion = Integer.parseInt(lector.readLine());
-			if(opcion == 5) break;
+			if(opcion == 6) break;
 			switch(opcion){
 				case 1:
 					addNewPeli();
@@ -78,6 +79,8 @@ public class Menu {
 					menuBuscar();
 					break;
 				case 4:
+					editPeli();
+				case 5:
 					listarPeli();
 					System.out.println();
 					System.out.println("Presiona ENTER para continuar");
@@ -157,6 +160,8 @@ public class Menu {
 		System.out.println("Año: " + peli.getAño());
 		System.out.println("Director: " + peli.getDirector());
 		System.out.println("Stock: " + peli.getStock());
+		System.out.println("Descripción: " + peli.getDescripcion());
+		System.out.println();
 	}
 	
 	//------------------------Listar peliculas-------------------------|
@@ -202,7 +207,7 @@ public class Menu {
 			System.out.println("3. Volver");
 			opcion = Integer.parseInt(lector.readLine());
 			if(opcion == 3) return;
-			System.out.print("Deseas ver la lista de las películas? (s/n): ");
+			System.out.print("¿Deseas ver la lista de las películas? (s/n): ");
 			String opcionL = lector.readLine();
 			if(opcionL.equalsIgnoreCase("s")) 
 				listarPeli();
@@ -349,6 +354,22 @@ public class Menu {
 		}
 	}
 	
+	//------------------------ 4. Editar película----------------------|
+	public void editPeli() throws IOException {
+		System.out.println("Ingrese el título de la película a editar: ");
+		String titulo = lector.readLine();
+		Pelicula peli = almacen1.buscarPorTitulo(titulo);
+		if(peli != null) {
+			System.out.println("Película encontrada");
+			System.out.println();
+			System.out.println("Ingrese nueva descripción de la película: ");
+			String descripcion = lector.readLine();
+			almacen1.editarPeli(titulo, descripcion);
+			datosPelicula(peli);
+		}
+		
+	}
+	
 	//-----------------------------------------------------------------|
 	//-----------------Opciones del menu gestion usuario---------------|
 	//-----------------------------------------------------------------|
@@ -361,9 +382,9 @@ public class Menu {
 		if(user != null) {  //Usuario existente
 			System.out.println("Se encontró el usuario: " + user.getNombre());
 			String opcion;
-			System.out.println("¿Desea ver la lista de películas disponibles? (y/n): ");
+			System.out.println("¿Deseas ver la lista de las películas? (s/n): ");
 			opcion = lector.readLine();
-			if(opcion.equalsIgnoreCase("y")) {
+			if(opcion.equalsIgnoreCase("s")) {
 				listarPeli();
 				System.out.println();
 			}
@@ -391,9 +412,9 @@ public class Menu {
 			String nombre = lector.readLine();
 			Usuario newUser = new Usuario(nombre, rut);
 			String opcion;
-			System.out.println("¿Desea ver la lista de películas disponibles? (y/n): ");
+			System.out.println("¿Deseas ver la lista de las películas? (s/n): ");
 			opcion = lector.readLine();
-			if(opcion.equalsIgnoreCase("y")) {
+			if(opcion.equalsIgnoreCase("s")) {
 				listarPeli();
 				System.out.println();
 			}
@@ -487,8 +508,8 @@ public class Menu {
 	}
 	
 	//-----------------------------------------------------------------|
-		//-----------------Opciones del menu gestion ventas---------------|
-		//-----------------------------------------------------------------|
+	//-----------------Opciones del menu gestion ventas----------------|
+	//-----------------------------------------------------------------|
 
 		//-----------------------1. Mostrar ventas--------------------|
 	public void mostrarVentas() {
