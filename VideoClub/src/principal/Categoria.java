@@ -16,7 +16,8 @@ public class Categoria {
 		for(int i = 0; i < this.lista.size(); i++) {
 			Pelicula peli = this.lista.get(i);
 			if(peli.getTitulo().equalsIgnoreCase(titulo)) {
-				this.lista.get(i).setDescripcion(descripcion);
+				peli.setDescripcion(descripcion);
+				break;
 			}
 		}
 	}

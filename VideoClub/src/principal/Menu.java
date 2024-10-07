@@ -80,6 +80,7 @@ public class Menu {
 					break;
 				case 4:
 					editPeli();
+					break;
 				case 5:
 					listarPeli();
 					System.out.println();
@@ -154,6 +155,7 @@ public class Menu {
 	
 	//----------------Imprimir los datos de la pelicula----------------|
 	public static void datosPelicula(Pelicula peli) {
+		System.out.println();
 		System.out.println("Título: " + peli.getTitulo());
 		System.out.println("Código: " + peli.getCodigo());
 		System.out.println("Género: " + peli.getGenero());
@@ -367,7 +369,9 @@ public class Menu {
 			almacen1.editarPeli(titulo, descripcion);
 			datosPelicula(peli);
 		}
-		
+		else {
+			System.out.println("Película no encontrada");
+		}
 	}
 	
 	//-----------------------------------------------------------------|

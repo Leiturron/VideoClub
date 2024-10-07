@@ -139,9 +139,9 @@ public class Almacén {
 				Pelicula pelicula = películas.get(i);
 				pelicula.setDescripcion(descripcion);
 				
-				mapaGéneros.get(pelicula.getGenero()).editarPelicula(titulo, descripcion);
-				mapaDirectores.get(pelicula.getDirector()).editarPelicula(titulo, descripcion);
-				mapaDécadas.get(pelicula.getDecada(pelicula.getAño())).editarPelicula(titulo, descripcion);
+				//mapaGéneros.get(pelicula.getGenero()).editarPelicula(titulo, descripcion);
+				//mapaDirectores.get(pelicula.getDirector()).editarPelicula(titulo, descripcion);
+				//mapaDécadas.get(pelicula.getDecada(pelicula.getAño())).editarPelicula(titulo, descripcion);
 				
 				return true;
 			}
