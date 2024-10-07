@@ -7,7 +7,9 @@ public class Pelicula {
 	private String genero;
 	private int año;
 	private int stock;
+	private int precio;
 	private String descripcion;
+	
 	
 	public Pelicula(int codigo, String titulo, String director, String genero, int año, int stock) {
 		this.codigo = codigo;
@@ -16,6 +18,7 @@ public class Pelicula {
 		this.genero = genero;
 		this.año = año;
 		this.stock = stock;
+		this.precio = calcularPrecioAutomatico();
 	}
 		
 	public int getCodigo() {
@@ -65,6 +68,24 @@ public class Pelicula {
 
 	public int getDecada(int año) {
 		return año - (año % 10);
+	}
+	
+	public int getPrecio() {
+		return precio;
+	}
+	
+	private int calcularPrecioAutomatico() {
+        int precioBase = 10;  
+        int decada = getDecada(año);
+
+        
+        if (decada < 1980) {
+            return precioBase -= 3;  
+        } else if (decada >= 1980 && decada < 2000) {
+            return precioBase += 2;  
+        } else {
+            return precioBase += 5;  
+        }
 	}
 	
 	public void prestar() {
