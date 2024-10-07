@@ -15,8 +15,8 @@ public class Ventas {
 		return ventas;
 	}
 	
-	public void hacerVenta() {
-		ventas++;
+	public void hacerVenta(int precio) {
+		ventas += precio;
 	}
 	
 	public int cerrarVentas() {
@@ -25,3 +25,4 @@ public class Ventas {
 		return totalVentas;
 	}
 }
+
