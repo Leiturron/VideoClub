@@ -163,7 +163,7 @@ public class Menu {
 		System.out.println("Director: " + peli.getDirector());
 		System.out.println("Stock: " + peli.getStock());
 		System.out.println("Descripción: " + peli.getDescripcion());
-		System.out.println("Precio: " + peli.getPrecio());
+		System.out.println("Precio: $" + peli.getPrecio());
 		System.out.println();
 	}
 	
