@@ -163,6 +163,7 @@ public class Menu {
 		System.out.println("Director: " + peli.getDirector());
 		System.out.println("Stock: " + peli.getStock());
 		System.out.println("Descripción: " + peli.getDescripcion());
+		System.out.println("Precio: " + peli.getPrecio());
 		System.out.println();
 	}
 	
@@ -364,7 +365,7 @@ public class Menu {
 		if(peli != null) {
 			System.out.println("Película encontrada");
 			System.out.println();
-			System.out.println("Ingrese nueva descripción de la película: ");
+			System.out.print("Ingrese nueva descripción de la película: ");
 			String descripcion = lector.readLine();
 			almacen1.editarPeli(titulo, descripcion);
 			datosPelicula(peli);
@@ -385,40 +386,55 @@ public class Menu {
 		Usuario user = clientes1.buscarUsuario(rut);
 		if(user != null) {  //Usuario existente
 			System.out.println("Se encontró el usuario: " + user.getNombre());
-			String opcion;
-			System.out.println("¿Deseas ver la lista de las películas? (s/n): ");
-			opcion = lector.readLine();
-			if(opcion.equalsIgnoreCase("s")) {
-				listarPeli();
-				System.out.println();
-			}
-			System.out.println("Ingrese el título de la película a prestar: ");
-			while(true) {
-				String titulo = lector.readLine();
-				Pelicula peli = almacen1.buscarPorTitulo(titulo);
-				if(peli != null) {
-					if(peli.getStock() != 0) {
-						peli.prestar();
-						clientes1.agregarPrestamo(rut, peli);
-						ventas1.hacerVenta();
-					}
-					else
-						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
-					break;
+			if(user.getSuscripcion() == Usuario.notVIP && user.getPeliculaPrestada().size() < 3 || 
+			  (user.getSuscripcion() == Usuario.isVIP && user.getPeliculaPrestada().size() < 5)) {
+				String opcion;
+				System.out.println("¿Deseas ver la lista de las películas? (s/n): ");
+				opcion = lector.readLine();
+				if(opcion.equalsIgnoreCase("s")) {
+					listarPeli();
+					System.out.println();
 				}
+				System.out.println("Ingrese el título de la película a prestar: ");
+				while(true) {
+					String titulo = lector.readLine();
+					Pelicula peli = almacen1.buscarPorTitulo(titulo);
+					if(peli != null) {
+						if(peli.getStock() != 0) {
+							int precioFinal;
+							peli.prestar();
+							clientes1.agregarPrestamo(rut, peli);
+							if(user.getSuscripcion() == Usuario.isVIP) {
+								precioFinal = (int) (peli.getPrecio() * 0.7);
+							}
+							else {
+								precioFinal = peli.getPrecio();
+							}
+							ventas1.hacerVenta(precioFinal);
+						}
+						else
+							System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
+						break;
+					}
 				else System.out.print("No encontró esa película, ingrese nuevamente: ");
-			}
+				}
+			}	
+			else System.out.println("Usuario no puede arrendar más películas por el momento");
 		}
 		else            //Usuario no existente
 		{
 			System.out.println("Registrando un nuevo usuario");
 			System.out.print("Ingrese el nombre del usuario: ");
 			String nombre = lector.readLine();
-			Usuario newUser = new Usuario(nombre, rut);
+			System.out.print("Ingrese el tipo de suscripción del usuario (1 = VIP, 0 = Básica): ");
+			byte suscripcion = Byte.parseByte(lector.readLine());
+			
+			Usuario newUser = new Usuario(nombre, rut, suscripcion);
 			String opcion;
-			System.out.println("¿Deseas ver la lista de las películas? (s/n): ");
+			System.out.print("¿Deseas ver la lista de las películas? (s/n): ");
 			opcion = lector.readLine();
 			if(opcion.equalsIgnoreCase("s")) {
+				System.out.println();
 				listarPeli();
 				System.out.println();
 			}
@@ -429,9 +445,16 @@ public class Menu {
 				Pelicula peli = almacen1.buscarPorTitulo(titulo);
 				if(peli != null) {
 					if(peli.getStock() != 0) {
+						int precioFinal;
 						peli.prestar();
 						clientes1.agregarPrestamo(newUser, peli);
-						ventas1.hacerVenta();
+						if(newUser.getSuscripcion() == Usuario.isVIP) {
+							precioFinal = (int) (peli.getPrecio() * 0.7);
+						}
+						else {
+							precioFinal = peli.getPrecio();
+						}
+						ventas1.hacerVenta(precioFinal);
 					}
 					else
 						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
@@ -482,8 +505,8 @@ public class Menu {
 	//-----------------------3. Buscar un usuario----------------------|
 	public void searchUser() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
-		System.out.println();
 		String rut = lector.readLine();
+		System.out.println();
 		Usuario user = clientes1.buscarUsuario(rut);
 		if(user != null) {
 			System.out.println("Usuario encontrado:");
@@ -518,14 +541,14 @@ public class Menu {
 		//-----------------------1. Mostrar ventas--------------------|
 	public void mostrarVentas() {
 		System.out.println();
-		System.out.println("Ventas: " + ventas1.getVentas());
+		System.out.println("Ventas: $" + ventas1.getVentas());
 		System.out.println();
 	}
 	
 	//-----------------------2. Cerrar ventas--------------------|
 	public void cerrarVentas() {
 		System.out.println();
-		System.out.println("Total ventas: " + ventas1.cerrarVentas());
+		System.out.println("Total ventas: $" + ventas1.cerrarVentas());
 		System.out.println();
 	}
 	
