@@ -12,8 +12,8 @@ public class Cliente {
 		return cliente;
 	}
 	
-	public void agregarUsuario(String nombre, String rut) {
-		Usuario usuario = new Usuario(nombre, rut);
+	public void agregarUsuario(String nombre, String rut, byte suscripcion) {
+		Usuario usuario = new Usuario(nombre, rut, suscripcion);
 		cliente.put(rut, usuario);
 	}
 	
@@ -46,4 +46,6 @@ public class Cliente {
 		return cliente.get(rut);
 	}
 }
+
+
 
