@@ -17,7 +17,7 @@ public class WinBuscarPeli extends VentanaPreset {
 	private JButton volver;
 
 	public WinBuscarPeli() {
-		frame = new JFrame("Eliminar película");
+		frame = new JFrame("Buscar película");
 		
 		VentanaPreset.setVentanaPropiedad(frame);
 		setComponentes();

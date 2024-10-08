@@ -4,19 +4,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import principal.Almacén;
+
 public class VentanaPrincipal extends VentanaPreset{
+	public static Almacén almacen1;
 	private JFrame mainFrame;
 	private JButton bPeli;
 	private JButton bUser;
 	private JButton bVenta;
 
-	public VentanaPrincipal() {
+	public VentanaPrincipal(){
+		almacen1 = new Almacén();
+		almacen1.Datos();
 		mainFrame = new JFrame("Administrador de Video Club");
 		VentanaPreset.setVentanaPropiedad(mainFrame);
 		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

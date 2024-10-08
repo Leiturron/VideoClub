@@ -7,6 +7,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+import principal.*;
+
 public class WinAgregarPeli extends VentanaPreset {
 	private JFrame frame;
 	private JTextField titleField;
@@ -48,6 +50,29 @@ public class WinAgregarPeli extends VentanaPreset {
 				frame.dispose();
 				VentanaGestionPeli ventanaGestionPeli = new VentanaGestionPeli();
 				ventanaGestionPeli.show();
+			}
+		});
+		
+		confirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					int codigo = VentanaPrincipal.almacen1.getOrden();
+					String titulo = titleField.getText();
+					System.out.println(titleField.getText());
+					String director = directField.getText();
+					String genero = generField.getText();
+					int anno = Integer.parseInt(yearField.getText());
+					int stock = Integer.parseInt(stockField.getText());
+					Pelicula peli = new Pelicula(codigo, titulo, director, genero, anno, stock);
+					VentanaPrincipal.almacen1.agregarPelícula(peli);
+					JOptionPane.showMessageDialog(frame, "Se agregó exitosamente");
+				}
+				catch(EmptyValueException e2) {
+					JOptionPane.showMessageDialog(frame, "Algunos campos se encuentran vacíos");
+				}
+				catch(Exception e3) {
+					JOptionPane.showMessageDialog(frame, "Error de ingresar el año o stock");
+				}
 			}
 		});
 	}

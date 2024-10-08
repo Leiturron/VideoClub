@@ -60,6 +60,15 @@ public class VentanaGestionPeli extends VentanaPreset{
 				WinBuscarPeli win = new WinBuscarPeli();
 				win.show();
 				
+				
+			}
+		});
+		
+		bLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				peliFrame.dispose();
+				WinListaPeli win = new WinListaPeli();
+				win.show();
 			}
 		});
 		
