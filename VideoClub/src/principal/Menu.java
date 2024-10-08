@@ -14,7 +14,7 @@ public class Menu {
 	private Cliente clientes1;
 	private Ventas ventas1;
 	
-	public Menu() throws IOException {
+	public Menu() throws IOException, EmptyValueException {
 		almacen1 = new Almacén();
 		almacen1.Datos();
 		clientes1 = new Cliente();
@@ -24,7 +24,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-------------------------Menu principal--------------------------|
 	//-----------------------------------------------------------------|
-	public void menuPrincipal() throws IOException, NameInvalidException, InvalidDirectorException {
+	public void menuPrincipal() throws IOException, NameInvalidException, InvalidDirectorException, EmptyValueException {
 		int opcion;
 		while(true) {
 			System.out.println("     Sistema de gestión");
@@ -57,7 +57,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-------------------Menu gestion de las peliculas-----------------|
 	//-----------------------------------------------------------------|
-	public void gestionPeliculas() throws IOException, NameInvalidException, InvalidDirectorException {
+	public void gestionPeliculas() throws IOException, NameInvalidException, InvalidDirectorException, EmptyValueException {
 		while(true) {
 			System.out.println("Gestión de películas");
 			System.out.println("1. Agregar película");
@@ -96,7 +96,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//--------------------Menu gestion de los usuarios-----------------|
 	//-----------------------------------------------------------------|
-	public void gestionUsuarios() throws IOException {
+	public void gestionUsuarios() throws IOException, EmptyValueException {
 		while(true) {
 			System.out.println("Gestion de usuarios");
 			System.out.println("1. Agregar un préstamo");
@@ -181,7 +181,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	
 	//---------------------- 1. Agregar película-----------------------|
-	public void addNewPeli() throws IOException {
+	public void addNewPeli() throws IOException, EmptyValueException {
 		int codigo = almacen1.getOrden();
 		System.out.print("Ingrese el título de la película: ");
 		String titulo = lector.readLine();
@@ -482,7 +482,7 @@ public class Menu {
 	}
 	
 	//-----------------------2. Eliminar un préstamo-------------------|
-	public void deletePrestamo() throws IOException {
+	public void deletePrestamo() throws IOException, EmptyValueException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
 		try {

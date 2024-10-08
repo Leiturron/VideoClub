@@ -31,7 +31,7 @@ public class Almacén {
 		películas.add(pelicula);
 	}
 	
-	public void Datos() throws IOException {
+	public void Datos() throws IOException, EmptyValueException {
 		File archivo = new File("src/recursos/infoPeliculas.csv");
 		try(BufferedReader reader = new BufferedReader(new FileReader(archivo))){
 			String linea = reader.readLine();
@@ -49,7 +49,13 @@ public class Almacén {
 		}
 	}
 	
-	public void agregarPelícula(Pelicula película) {
+	public void agregarPelícula(Pelicula película) throws EmptyValueException {
+		
+		if(película.getTitulo() == null || película.getDirector() == null || 
+		   película.getGenero() == null || película.getAño() == 0 ||
+		   película.getStock() == 0) {
+			throw new EmptyValueException();
+		}
 		películas.add(película);
 		
 		String genero = película.getGenero().toUpperCase();
