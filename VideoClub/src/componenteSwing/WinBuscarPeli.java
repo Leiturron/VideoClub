@@ -48,7 +48,7 @@ public class WinBuscarPeli extends VentanaPreset {
 	public void setComponentes() {
 		code = new JButton("Buscar por código");
 		title = new JButton("Buscar por título");
-		gener = new JButton("Buscar por gener");
+		gener = new JButton("Buscar por genero");
 		direc = new JButton("Buscar por director");
 		deca = new JButton("Buscar por década");
 		volver = new JButton("Volver");

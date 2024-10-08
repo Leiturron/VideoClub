@@ -58,7 +58,6 @@ public class WinAgregarPeli extends VentanaPreset {
 				try{
 					int codigo = VentanaPrincipal.almacen1.getOrden();
 					String titulo = titleField.getText();
-					System.out.println(titleField.getText());
 					String director = directField.getText();
 					String genero = generField.getText();
 					int anno = Integer.parseInt(yearField.getText());
