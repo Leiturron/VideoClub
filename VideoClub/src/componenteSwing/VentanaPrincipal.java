@@ -18,8 +18,8 @@ public class VentanaPrincipal extends VentanaPreset{
 
 	public VentanaPrincipal() {
 		mainFrame = new JFrame("Administrador de Video Club");
-		
-		VentanaPreset.setVentanaDimension(mainFrame);
+		VentanaPreset.setVentanaPropiedad(mainFrame);
+		mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setComponentes();
 		setLogic();
 	}
@@ -31,8 +31,8 @@ public class VentanaPrincipal extends VentanaPreset{
 	public void setLogic() {
 		mainFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				int opcion = JOptionPane.showConfirmDialog(mainFrame, "Estas seguros de quieres salir del programa? (Todos los "
+				
+				int opcion = JOptionPane.showConfirmDialog(mainFrame, "Estas seguros de quieres salir del programa? (Todo los "
 						+ "cambios serán guardado)", "Advertencia", JOptionPane.YES_NO_OPTION);
 				if(opcion == JOptionPane.YES_OPTION)
 					System.exit(0);

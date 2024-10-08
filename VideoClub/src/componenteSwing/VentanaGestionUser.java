@@ -20,7 +20,7 @@ public class VentanaGestionUser extends VentanaPreset{
 	public VentanaGestionUser() {
 		userFrame = new JFrame("Gestion de Usuarios");
 				
-		VentanaPreset.setVentanaDimension(userFrame);
+		VentanaPreset.setVentanaPropiedad(userFrame);
 		setComponentes();
 		setLogic();
 	}
@@ -32,7 +32,6 @@ public class VentanaGestionUser extends VentanaPreset{
 	public void setLogic() {
 		userFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				userFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
 				ventanaPrincipal.show();
 			}

@@ -18,7 +18,7 @@ public class VentanaGestionVenta extends VentanaPreset{
 	public VentanaGestionVenta() {
 		ventaFrame = new JFrame("Gestion de Ventas");
 		
-		VentanaPreset.setVentanaDimension(ventaFrame);
+		VentanaPreset.setVentanaPropiedad(ventaFrame);
 		setComponentes();
 		setLogic();
 	}
@@ -30,7 +30,6 @@ public class VentanaGestionVenta extends VentanaPreset{
 	public void setLogic() {
 		ventaFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				ventaFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
 				ventanaPrincipal.show();
 			}

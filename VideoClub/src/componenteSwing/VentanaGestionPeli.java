@@ -19,8 +19,8 @@ public class VentanaGestionPeli extends VentanaPreset{
 	
 	public VentanaGestionPeli() {
 		peliFrame = new JFrame("Gestion de Películas");
-				
-		VentanaPreset.setVentanaDimension(peliFrame);
+		
+		VentanaPreset.setVentanaPropiedad(peliFrame);
 		setComponentes();
 		setLogic();
 	}
@@ -32,9 +32,25 @@ public class VentanaGestionPeli extends VentanaPreset{
 	public void setLogic() {
 		peliFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				peliFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				
 				VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
 				ventanaPrincipal.show();
+			}
+		});
+		
+		bAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				peliFrame.dispose();
+				WinAgregarPeli win = new WinAgregarPeli();
+				win.show();
+			}
+		});
+		
+		bEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				peliFrame.dispose();
+				WinEliminarPeli win = new WinEliminarPeli();
+				win.show();
 			}
 		});
 		
