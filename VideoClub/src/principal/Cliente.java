@@ -42,10 +42,10 @@ public class Cliente {
 		cliente.get(rut).getPeliculaPrestada().add(peli);
 	}
 	
-	public Usuario buscarUsuario(String rut) {
-		return cliente.get(rut);
+	public Usuario buscarUsuario(String rut) throws InvalidUserException {
+		if(cliente.containsKey(rut)) {
+			return cliente.get(rut);
+		}
+		throw new InvalidUserException();
 	}
 }
-
-
-

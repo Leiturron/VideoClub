@@ -149,30 +149,39 @@ public class Almacén {
 		return false;
 	}
 	
-	public Pelicula buscarPorCodigo(int codigo) {
+	public Pelicula buscarPorCodigo(int codigo) throws NumInvalidException{
 		for(short i = 0; i < películas.size(); i++)
 			if(películas.get(i).getCodigo() == codigo) return películas.get(i);
-		return null;
+		throw new NumInvalidException();
 	}
 	
-	public Pelicula buscarPorTitulo(String titulo) {
+	public Pelicula buscarPorTitulo(String titulo) throws NameInvalidException {
 		for(short i = 0; i < películas.size(); i++) 
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) return películas.get(i);
-		return null;
+		throw new NameInvalidException();
 	}
 
-	public PeliGenero buscarPorGenero(String genero) {
+	public PeliGenero buscarPorGenero(String genero) throws InvalidGenreException {
 		String genre = genero.toUpperCase();
-		return mapaGéneros.get(genre);
+		if(mapaGéneros.containsKey(genre)) {
+			return mapaGéneros.get(genre);
+		}
+		throw new InvalidGenreException();
 	}
 	
-	public PeliDirector buscarPorDirector(String director) {
+	public PeliDirector buscarPorDirector(String director) throws InvalidDirectorException {
 		String direc = director.toUpperCase();
-		return mapaDirectores.get(direc);
+		if(mapaDirectores.containsKey(direc)) {
+			return mapaDirectores.get(direc);
+		}
+		throw new InvalidDirectorException();
 	}
 	
-	public PeliDecada buscarPorDecada(int decada) {
-		return mapaDécadas.get(decada);
+	public PeliDecada buscarPorDecada(int decada) throws InvalidDecadeException {
+		if(mapaDécadas.containsKey(decada)) {
+			return mapaDécadas.get(decada);
+		}
+		throw new InvalidDecadeException();
 	}
 	
 	//getter setter
@@ -183,6 +192,4 @@ public class Almacén {
 	public void setOrden(int ordenCodigo) {
 		this.ordenCodigo = ordenCodigo;
 	}
-	
-	
 }

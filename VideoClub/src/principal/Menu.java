@@ -24,7 +24,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-------------------------Menu principal--------------------------|
 	//-----------------------------------------------------------------|
-	public void menuPrincipal() throws IOException {
+	public void menuPrincipal() throws IOException, NameInvalidException, InvalidDirectorException {
 		int opcion;
 		while(true) {
 			System.out.println("     Sistema de gestión");
@@ -57,7 +57,7 @@ public class Menu {
 	//-----------------------------------------------------------------|
 	//-------------------Menu gestion de las peliculas-----------------|
 	//-----------------------------------------------------------------|
-	public void gestionPeliculas() throws IOException {
+	public void gestionPeliculas() throws IOException, NameInvalidException, InvalidDirectorException {
 		while(true) {
 			System.out.println("Gestión de películas");
 			System.out.println("1. Agregar película");
@@ -263,7 +263,7 @@ public class Menu {
 	}
 	
 	//------------------------ 3. Buscar película----------------------|
-	public void menuBuscar() throws IOException{
+	public void menuBuscar() throws IOException, NameInvalidException, InvalidDirectorException{
 		while(true) {
 			System.out.println("Buscar Película");
 			System.out.println("1. Buscar por código");
@@ -302,15 +302,20 @@ public class Menu {
 	
 	//Buscar por codigo
 	public void searchCode() throws IOException {
+		try {
 		System.out.print("Ingrese el código de la película a buscar: ");
 		int codigo = Integer.parseInt(lector.readLine());
 		Pelicula peli = almacen1.buscarPorCodigo(codigo);
 		if(peli == null) System.out.println("Película no encontrada");
 		else datosPelicula(peli);
+		}
+		catch(NumInvalidException e) {
+			System.out.println("No se encontró el código");
+		}
 	}
 	
 	//Buscar por titulo
-	public void searchTitle() throws IOException {
+	public void searchTitle() throws IOException, NameInvalidException {
 		System.out.print("Ingrese el título de la película a buscar: ");
 		String title = lector.readLine();
 		Pelicula peli = almacen1.buscarPorTitulo(title.toUpperCase());
@@ -319,50 +324,52 @@ public class Menu {
 	}
 	
 	//Buscar por director
-	public void searchDirect()throws IOException {
+	public void searchDirect()throws IOException, InvalidDirectorException {
 		System.out.print("Ingrese el nombre del director: ");
 		String nomb = lector.readLine();
 		
 		PeliDirector objDirec = almacen1.buscarPorDirector(nomb);
-		if(objDirec == null) System.out.println("No existe director llamado" + nomb);
-		else {
-			System.out.println("Películas de " + nomb);
-			objDirec.listarPeliculas();
-		}
+		
+		System.out.println("Películas de " + nomb);
+		objDirec.listarPeliculas();
+		
 	}
 	
 	//Buscar por genero
 	public void searchGener() throws IOException {
 		System.out.print("Ingrese el género de la película: ");
 		String genero = lector.readLine();
-		
-		PeliGenero objGenre = almacen1.buscarPorGenero(genero);
-		if(objGenre == null) System.out.println("No existe película de género " + genero);
-		else {
+		try {
+			PeliGenero objGenre = almacen1.buscarPorGenero(genero);
 			System.out.println("Películas de " + genero);
 			objGenre.listarPeliculas();
+		}
+		catch(InvalidGenreException e){
+			System.out.println("No existe película de género " + genero);
 		}
 	}
 	
 	//Buscar por decada
 	public void searchDecada() throws IOException {
-		System.out.print("Ingrese el año (El sistema lo transforma a década): ");
-		int anno = Integer.parseInt(lector.readLine());
-		int decada = anno - anno % 10;
-		PeliDecada objDec = almacen1.buscarPorDecada(decada);
-		if(objDec == null) System.out.println("No existe película de década " + decada);
-		else {
+		try {
+			System.out.print("Ingrese el año (El sistema lo transforma a década): ");
+			int anno = Integer.parseInt(lector.readLine());
+			int decada = anno - anno % 10;
+			PeliDecada objDec = almacen1.buscarPorDecada(decada);
 			System.out.println("Películas de década " + decada);
 			objDec.listarPeliculas();
+		}
+		catch(InvalidDecadeException e){
+			System.out.println("No existen películas en esa década");
 		}
 	}
 	
 	//------------------------ 4. Editar película----------------------|
 	public void editPeli() throws IOException {
-		System.out.println("Ingrese el título de la película a editar: ");
-		String titulo = lector.readLine();
-		Pelicula peli = almacen1.buscarPorTitulo(titulo);
-		if(peli != null) {
+		try {
+			System.out.println("Ingrese el título de la película a editar: ");
+			String titulo = lector.readLine();
+			Pelicula peli = almacen1.buscarPorTitulo(titulo);
 			System.out.println("Película encontrada");
 			System.out.println();
 			System.out.print("Ingrese nueva descripción de la película: ");
@@ -370,8 +377,8 @@ public class Menu {
 			almacen1.editarPeli(titulo, descripcion);
 			datosPelicula(peli);
 		}
-		else {
-			System.out.println("Película no encontrada");
+		catch(NameInvalidException e){
+			System.out.println("No se encontró una película con ese título");
 		}
 	}
 	
@@ -381,10 +388,12 @@ public class Menu {
 
 	//-----------------------1. Agregar un préstamo--------------------|
 	public void addPrestamo() throws IOException {
+		
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
+		try {
 		Usuario user = clientes1.buscarUsuario(rut);
-		if(user != null) {  //Usuario existente
+		  //Usuario existente
 			System.out.println("Se encontró el usuario: " + user.getNombre());
 			if(user.getSuscripcion() == Usuario.notVIP && user.getPeliculaPrestada().size() < 3 || 
 			  (user.getSuscripcion() == Usuario.isVIP && user.getPeliculaPrestada().size() < 5)) {
@@ -397,31 +406,35 @@ public class Menu {
 				}
 				System.out.println("Ingrese el título de la película a prestar: ");
 				while(true) {
-					String titulo = lector.readLine();
-					Pelicula peli = almacen1.buscarPorTitulo(titulo);
-					if(peli != null) {
-						if(peli.getStock() != 0) {
-							int precioFinal;
-							peli.prestar();
-							clientes1.agregarPrestamo(rut, peli);
-							if(user.getSuscripcion() == Usuario.isVIP) {
-								precioFinal = (int) (peli.getPrecio() * 0.7);
+					try {
+						String titulo = lector.readLine();
+						Pelicula peli = almacen1.buscarPorTitulo(titulo);
+						if(peli != null) {
+							if(peli.getStock() != 0) {
+								int precioFinal;
+								peli.prestar();
+								clientes1.agregarPrestamo(rut, peli);
+								if(user.getSuscripcion() == Usuario.isVIP) {
+									precioFinal = (int) (peli.getPrecio() * 0.7);
+								}
+								else {
+									precioFinal = peli.getPrecio();
+								}
+								ventas1.hacerVenta(precioFinal);
 							}
-							else {
-								precioFinal = peli.getPrecio();
-							}
-							ventas1.hacerVenta(precioFinal);
+							else
+								System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
+							break;
 						}
-						else
-							System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
-						break;
+					}	
+					catch(NameInvalidException e) {
+						System.out.print("No encontró esa película, ingrese nuevamente: ");
 					}
-				else System.out.print("No encontró esa película, ingrese nuevamente: ");
 				}
 			}	
 			else System.out.println("Usuario no puede arrendar más películas por el momento");
 		}
-		else            //Usuario no existente
+		catch(InvalidUserException e)            //Usuario no existente
 		{
 			System.out.println("Registrando un nuevo usuario");
 			System.out.print("Ingrese el nombre del usuario: ");
@@ -441,27 +454,29 @@ public class Menu {
 	
 			System.out.println("Ingrese el título de la película a prestar: ");
 			while(true) {
+				try {
 				String titulo = lector.readLine();
 				Pelicula peli = almacen1.buscarPorTitulo(titulo);
-				if(peli != null) {
-					if(peli.getStock() != 0) {
-						int precioFinal;
-						peli.prestar();
-						clientes1.agregarPrestamo(newUser, peli);
-						if(newUser.getSuscripcion() == Usuario.isVIP) {
-							precioFinal = (int) (peli.getPrecio() * 0.7);
-						}
-						else {
-							precioFinal = peli.getPrecio();
-						}
-						ventas1.hacerVenta(precioFinal);
+				if(peli.getStock() != 0) {
+					int precioFinal;
+					peli.prestar();
+					clientes1.agregarPrestamo(newUser, peli);
+					if(newUser.getSuscripcion() == Usuario.isVIP) {
+						precioFinal = (int) (peli.getPrecio() * 0.7);
 					}
-					else
-						System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
-					break;
-					
+					else {
+						precioFinal = peli.getPrecio();
+					}
+					ventas1.hacerVenta(precioFinal);
 				}
-				else System.out.println("No se encontró esa película, ingrese nuevamente: ");
+				else
+					System.out.println("Se acabó el stock de la pelicula " + peli.getTitulo());
+				break;
+				
+				}
+				catch(NameInvalidException ex) {
+					System.out.println("No se encontró esa película, ingrese nuevamente: ");
+				}
 			}
 		}	
 	}
@@ -470,8 +485,8 @@ public class Menu {
 	public void deletePrestamo() throws IOException {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
-		Usuario user = clientes1.buscarUsuario(rut);
-		if(user != null) {
+		try {
+			Usuario user = clientes1.buscarUsuario(rut);
 			System.out.println("Se encontró el usuario " + user.getNombre());
 			System.out.println();
 			if(user.getPeliculaPrestada().size() != 0) {
@@ -484,13 +499,13 @@ public class Menu {
 				System.out.print("Ingrese el número de la película a devolver: ");
 				int número = Integer.parseInt(lector.readLine());
 				Pelicula peliUser = user.getPeliculaPrestada().get(número - 1);
-				Pelicula peli = almacen1.buscarPorTitulo(peliUser.getTitulo());
-				if(peli == null) {
+				try {
+					Pelicula peli = almacen1.buscarPorTitulo(peliUser.getTitulo());
+					peli.devolver();
+				}
+				catch(NameInvalidException e) {
 					peliUser.setStock(1);
 					almacen1.agregarPelícula(peliUser);
-				}
-				else {
-					peli.devolver();
 				}
 				clientes1.eliminarPrestamo(user, peliUser.getTitulo());
 				System.out.println();
@@ -499,7 +514,9 @@ public class Menu {
 			}
 			else System.out.println("El usuario no tiene películas prestadas");
 		}
-		else System.out.println("No existe usuario con ese rut");
+		catch(InvalidUserException e) {
+			System.out.println("No existe usuario con ese rut");
+		}
 	}
 	
 	//-----------------------3. Buscar un usuario----------------------|
@@ -507,13 +524,15 @@ public class Menu {
 		System.out.print("Ingrese el rut del usuario: ");
 		String rut = lector.readLine();
 		System.out.println();
-		Usuario user = clientes1.buscarUsuario(rut);
-		if(user != null) {
+		try {
+			Usuario user = clientes1.buscarUsuario(rut);
 			System.out.println("Usuario encontrado:");
 			System.out.println();
 			user.datos();
 		}
-		else System.out.println("No existe usuario con ese rut");
+		catch(InvalidUserException e) {
+			System.out.println("No existe usuario con ese rut");
+		}
 	}
 	
 	//--------------------------4. Listar usuarios---------------------|
@@ -567,6 +586,3 @@ public class Menu {
 		}
 	}
 }
-
-
-
