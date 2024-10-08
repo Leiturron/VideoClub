@@ -54,6 +54,15 @@ public class VentanaGestionPeli extends VentanaPreset{
 			}
 		});
 		
+		bBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				peliFrame.dispose();
+				WinBuscarPeli win = new WinBuscarPeli();
+				win.show();
+				
+			}
+		});
+		
 		bVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				peliFrame.dispose();
