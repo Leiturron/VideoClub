@@ -81,7 +81,7 @@ public class Almacén {
 		
 	}
 
-	public boolean eliminarPelícula(String titulo) throws titleInvalidException {
+	public boolean eliminarPelícula(String titulo) throws NameInvalidException {
 		for(short i = 0; i < películas.size(); i++) {
 			if(películas.get(i).getTitulo().equalsIgnoreCase(titulo)) {
 				Pelicula película = películas.remove(i);
@@ -104,7 +104,7 @@ public class Almacén {
 				return true;
 			}
 		}
-		throw new titleInvalidException();
+		throw new NameInvalidException();
 	}
 	
 	public boolean eliminarPelícula(int codigo) throws NumInvalidException {
